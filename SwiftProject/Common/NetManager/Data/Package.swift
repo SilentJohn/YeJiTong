@@ -25,11 +25,10 @@ class PackageHeader {
         return MemoryLayout.size(ofValue: tid) + MemoryLayout.size(ofValue: requestID) + MemoryLayout.size(ofValue: contentLen)
     }
     
-    func serialize() -> Data {
-        var serializeData = Utility.data(fromUInt32: UInt32(tid))
-        serializeData.append(Utility.data(fromUInt32: UInt32(requestID)))
-        serializeData.append(Utility.data(fromUInt32: UInt32(contentLen)))
-        return serializeData
+    func serialize(serializedData: inout Data){
+        serializedData.append(Utility.data(fromUInt32: UInt32(tid)))
+        serializedData.append(Utility.data(fromUInt32: UInt32(requestID)))
+        serializedData.append(Utility.data(fromUInt32: UInt32(contentLen)))
     }
     
     func deserialize(data: Data, from: Data.Index, to: Data.Index) {

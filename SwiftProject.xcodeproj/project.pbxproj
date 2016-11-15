@@ -54,6 +54,7 @@
 		8181963C1DD567BA00C6A71D /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8181963B1DD567BA00C6A71D /* Utility.swift */; };
 		8181963E1DD5682900C6A71D /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8181963D1DD5682900C6A71D /* Field.swift */; };
 		81AF488F1DD9AA86001E7EAA /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AF488E1DD9AA86001E7EAA /* Package.swift */; };
+		81AF48911DDAAE6F001E7EAA /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AF48901DDAAE6F001E7EAA /* TextField.swift */; };
 		81B834DE1DD32883009A8A53 /* NetRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B834DD1DD32883009A8A53 /* NetRequestManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -128,6 +129,7 @@
 		8181963B1DD567BA00C6A71D /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		8181963D1DD5682900C6A71D /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
 		81AF488E1DD9AA86001E7EAA /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		81AF48901DDAAE6F001E7EAA /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		81B834DD1DD32883009A8A53 /* NetRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetRequestManager.swift; sourceTree = "<group>"; };
 		8300D64B2DDF64FFC0EB05A7 /* Pods_SwiftProjectTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftProjectTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F214C7493CE2CBCB34FE828 /* Pods-SwiftProjectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftProjectTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftProjectTests/Pods-SwiftProjectTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 			children = (
 				8181963D1DD5682900C6A71D /* Field.swift */,
 				81AF488E1DD9AA86001E7EAA /* Package.swift */,
+				81AF48901DDAAE6F001E7EAA /* TextField.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -724,6 +727,7 @@
 				81713CBC1DB8B17300EDAEEF /* LoginTextField.swift in Sources */,
 				81AF488F1DD9AA86001E7EAA /* Package.swift in Sources */,
 				812195131DD2F0AD0071FAB5 /* Defines.swift in Sources */,
+				81AF48911DDAAE6F001E7EAA /* TextField.swift in Sources */,
 				8181963E1DD5682900C6A71D /* Field.swift in Sources */,
 				81713C861DB8664200EDAEEF /* AppDelegate.swift in Sources */,
 				812195101DD2EDC50071FAB5 /* MessageOtherCell.swift in Sources */,

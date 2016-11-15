@@ -8,6 +8,11 @@
 
 import Foundation
 
+enum FID {
+    case TEXTFIELD
+    case FILEFIELD
+}
+
 class Field {
     
     var fieldID: UInt16
@@ -22,24 +27,34 @@ class Field {
         fieldContentLength = 0
     }
     
-    func serialize() -> Data {
-        var serializedData = Utility.data(fromUInt16: fieldID)
+    func serialize(serializedData: inout Data) {
+        serializedData.append(Utility.data(fromUInt16: fieldID))
         serializedData.append(Utility.data(fromUInt32: fieldContentLength))
-        return serializedData
     }
     
-    func deserialize(data: Data, from: Data.Index, to: Data.Index) {
-        guard from + Field.getFieldHeaderLength() <= to else {
+    func deserialize(fromData: Data, start: Data.Index, end: Data.Index) -> Bool {
+        guard start + Field.getFieldHeaderLength() <= end else {
             NSLog("Invalid field")
-            return
+            return false
         }
-        let fieldID: UInt16 = UInt16(Utility.int(fromData: data, start: from, length: MemoryLayout.size(ofValue: UInt16.self)))
-        let fieldLen: UInt32 = UInt32(Utility.int(fromData: data, start: from + MemoryLayout.size(ofValue: UInt16.self), length: MemoryLayout.size(ofValue: UInt32.self)))
-        guard from + Field.getFieldHeaderLength() + Int(fieldID) >= to  else {
+        let fieldID: UInt16 = UInt16(Utility.int(fromData: fromData, start: start, length: MemoryLayout.size(ofValue: UInt16.self)))
+        let fieldLen: UInt32 = UInt32(Utility.int(fromData: fromData, start: start.advanced(by: MemoryLayout.size(ofValue: UInt16.self)), length: MemoryLayout.size(ofValue: UInt32.self)))
+        guard start + Field.getFieldHeaderLength() + Int(fieldID) >= end  else {
             NSLog("Field content too short")
-            return
+            return false
         }
         self.fieldID = fieldID
         fieldContentLength = fieldLen
+        return true
+    }
+}
+
+class FieldParser {
+    func parseField(fromData: Data, start: Data.Index, end: Data.Index) -> Field? {
+        guard start.distance(to: end) < MemoryLayout.size(ofValue: UInt16.self) else {
+            NSLog("Cannot parse field ID")
+            return nil
+        }
+        return nil
     }
 }
