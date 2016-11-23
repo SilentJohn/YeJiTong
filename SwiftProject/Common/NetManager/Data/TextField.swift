@@ -10,28 +10,18 @@ import Foundation
 
 class TextField: Field {
     var jsonLen: Int = 0
-    private var _json: String?
-    var json: String? {
-        set {
-            _json = newValue
-        }
-        get {
-            return _json
-        }
-    }
+    var json: String?
     
     func setJsonString(rootDict: [String: AnyObject]) {
-        do {
-            let jsonData: Data = try JSONSerialization.data(withJSONObject: rootDict, options: .prettyPrinted)
-            json = String(data: jsonData, encoding: .utf8)
-            jsonLen = json!.lengthOfBytes(using: .utf8)
-            fieldContentLength = UInt32(getFieldLength())
-        } catch {
-            print("\(error)")
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: rootDict, options: .prettyPrinted) else {
             json = nil
             jsonLen = 0
             fieldContentLength = 0
+            return
         }
+        json = String(data: jsonData, encoding: .utf8)
+        jsonLen = json!.lengthOfBytes(using: .utf8)
+        fieldContentLength = UInt32(getFieldLength())
     }
     
     func getFieldLength() -> Int {

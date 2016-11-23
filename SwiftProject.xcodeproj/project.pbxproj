@@ -22,6 +22,7 @@
 		811A1BC71DC872390078C44C /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A1BC61DC872390078C44C /* SettingTableViewController.swift */; };
 		812195101DD2EDC50071FAB5 /* MessageOtherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8121950F1DD2EDC50071FAB5 /* MessageOtherCell.swift */; };
 		812195131DD2F0AD0071FAB5 /* Defines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812195121DD2F0AD0071FAB5 /* Defines.swift */; };
+		81310E071DE58CCD005B704A /* FileField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81310E061DE58CCC005B704A /* FileField.swift */; };
 		814A3E611DBF2EFC007CF48D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814A3E601DBF2EFC007CF48D /* RootViewController.swift */; };
 		814A3E661DBF353F007CF48D /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814A3E651DBF353F007CF48D /* MainTabViewController.swift */; };
 		814A3E691DC0B362007CF48D /* infos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 814A3E681DC0B362007CF48D /* infos@2x.png */; };
@@ -90,6 +91,7 @@
 		811A1BC61DC872390078C44C /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		8121950F1DD2EDC50071FAB5 /* MessageOtherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageOtherCell.swift; sourceTree = "<group>"; };
 		812195121DD2F0AD0071FAB5 /* Defines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defines.swift; sourceTree = "<group>"; };
+		81310E061DE58CCC005B704A /* FileField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileField.swift; sourceTree = "<group>"; };
 		814A3E601DBF2EFC007CF48D /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		814A3E651DBF353F007CF48D /* MainTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		814A3E681DC0B362007CF48D /* infos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infos@2x.png"; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 				8181963D1DD5682900C6A71D /* Field.swift */,
 				81AF488E1DD9AA86001E7EAA /* Package.swift */,
 				81AF48901DDAAE6F001E7EAA /* TextField.swift */,
+				81310E061DE58CCC005B704A /* FileField.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -725,6 +728,7 @@
 				814A3E611DBF2EFC007CF48D /* RootViewController.swift in Sources */,
 				81B834DE1DD32883009A8A53 /* NetRequestManager.swift in Sources */,
 				81713CBC1DB8B17300EDAEEF /* LoginTextField.swift in Sources */,
+				81310E071DE58CCD005B704A /* FileField.swift in Sources */,
 				81AF488F1DD9AA86001E7EAA /* Package.swift in Sources */,
 				812195131DD2F0AD0071FAB5 /* Defines.swift in Sources */,
 				81AF48911DDAAE6F001E7EAA /* TextField.swift in Sources */,
