@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum FID {
-    case TEXTFIELD
+enum FID: Int16 {
+    case TEXTFIELD = 0x0005
     case FILEFIELD
 }
 
@@ -50,11 +50,26 @@ class Field {
 }
 
 class FieldParser {
+    static let shared = FieldParser()
+    private init() {
+        
+    }
+    
     func parseField(fromData: Data, start: Data.Index, end: Data.Index) -> Field? {
         guard start.distance(to: end) < MemoryLayout.size(ofValue: UInt16.self) else {
             NSLog("Cannot parse field ID")
             return nil
         }
-        return nil
+        var fd: Field?
+        
+        if let fieldID = FID(rawValue: Int16(Utility.int(fromData: fromData, start: start, length: 2))) {
+            switch fieldID {
+            case .TEXTFIELD:
+                fd = TextField(fieldID: UInt16(fieldID.rawValue))
+            case .FILEFIELD:
+                fd = FileField(fieldID: UInt16(fieldID.rawValue))
+            }
+        }
+        return fd
     }
 }

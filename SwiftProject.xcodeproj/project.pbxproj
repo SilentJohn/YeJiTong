@@ -38,6 +38,10 @@
 		814A3E7F1DC1E87B007CF48D /* MessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814A3E7E1DC1E87B007CF48D /* MessageTableViewController.swift */; };
 		814A3E821DC20AB9007CF48D /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814A3E811DC20AB9007CF48D /* MessageTableViewCell.swift */; };
 		814A3E851DC20C5D007CF48D /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814A3E841DC20C5D007CF48D /* MessageModel.swift */; };
+		815B47281DE7DF3A002E0444 /* SQLiteOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815B47271DE7DF3A002E0444 /* SQLiteOperation.swift */; };
+		815B472A1DE7E5A6002E0444 /* ReadPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815B47291DE7E5A6002E0444 /* ReadPath.swift */; };
+		815B472C1DE84538002E0444 /* ContentField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815B472B1DE84538002E0444 /* ContentField.swift */; };
+		815B472E1DE84814002E0444 /* AttatchmentField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815B472D1DE84814002E0444 /* AttatchmentField.swift */; };
 		81713C861DB8664200EDAEEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81713C851DB8664200EDAEEF /* AppDelegate.swift */; };
 		81713C8B1DB8664200EDAEEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81713C891DB8664200EDAEEF /* Main.storyboard */; };
 		81713C8D1DB8664200EDAEEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81713C8C1DB8664200EDAEEF /* Assets.xcassets */; };
@@ -54,6 +58,7 @@
 		81713CCC1DBE198100EDAEEF /* success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 81713CCA1DBE198100EDAEEF /* success@2x.png */; };
 		8181963C1DD567BA00C6A71D /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8181963B1DD567BA00C6A71D /* Utility.swift */; };
 		8181963E1DD5682900C6A71D /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8181963D1DD5682900C6A71D /* Field.swift */; };
+		818577551DE6F56E001462FD /* VerifyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818577541DE6F56E001462FD /* VerifyField.swift */; };
 		81AF488F1DD9AA86001E7EAA /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AF488E1DD9AA86001E7EAA /* Package.swift */; };
 		81AF48911DDAAE6F001E7EAA /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AF48901DDAAE6F001E7EAA /* TextField.swift */; };
 		81B834DE1DD32883009A8A53 /* NetRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B834DD1DD32883009A8A53 /* NetRequestManager.swift */; };
@@ -107,6 +112,10 @@
 		814A3E7E1DC1E87B007CF48D /* MessageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTableViewController.swift; sourceTree = "<group>"; };
 		814A3E811DC20AB9007CF48D /* MessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		814A3E841DC20C5D007CF48D /* MessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
+		815B47271DE7DF3A002E0444 /* SQLiteOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteOperation.swift; sourceTree = "<group>"; };
+		815B47291DE7E5A6002E0444 /* ReadPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadPath.swift; sourceTree = "<group>"; };
+		815B472B1DE84538002E0444 /* ContentField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentField.swift; sourceTree = "<group>"; };
+		815B472D1DE84814002E0444 /* AttatchmentField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttatchmentField.swift; sourceTree = "<group>"; };
 		81713C821DB8664200EDAEEF /* SwiftProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81713C851DB8664200EDAEEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81713C8A1DB8664200EDAEEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -130,6 +139,7 @@
 		81713CCA1DBE198100EDAEEF /* success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success@2x.png"; sourceTree = "<group>"; };
 		8181963B1DD567BA00C6A71D /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		8181963D1DD5682900C6A71D /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
+		818577541DE6F56E001462FD /* VerifyField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyField.swift; sourceTree = "<group>"; };
 		81AF488E1DD9AA86001E7EAA /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		81AF48901DDAAE6F001E7EAA /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		81B834DD1DD32883009A8A53 /* NetRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetRequestManager.swift; sourceTree = "<group>"; };
@@ -272,6 +282,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		815B47261DE7DC2B002E0444 /* ReadPath */ = {
+			isa = PBXGroup;
+			children = (
+				815B47291DE7E5A6002E0444 /* ReadPath.swift */,
+			);
+			path = ReadPath;
+			sourceTree = "<group>";
+		};
 		81713C791DB8664200EDAEEF = {
 			isa = PBXGroup;
 			children = (
@@ -375,6 +393,8 @@
 			children = (
 				81713CC61DBE0FC100EDAEEF /* Extensions.swift */,
 				812195141DD30CBE0071FAB5 /* NetManager */,
+				818577561DE6F7CB001462FD /* SQLiteOperation */,
+				815B47261DE7DC2B002E0444 /* ReadPath */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -395,6 +415,9 @@
 				81AF488E1DD9AA86001E7EAA /* Package.swift */,
 				81AF48901DDAAE6F001E7EAA /* TextField.swift */,
 				81310E061DE58CCC005B704A /* FileField.swift */,
+				818577541DE6F56E001462FD /* VerifyField.swift */,
+				815B472B1DE84538002E0444 /* ContentField.swift */,
+				815B472D1DE84814002E0444 /* AttatchmentField.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -405,6 +428,14 @@
 				8181963B1DD567BA00C6A71D /* Utility.swift */,
 			);
 			path = Tool;
+			sourceTree = "<group>";
+		};
+		818577561DE6F7CB001462FD /* SQLiteOperation */ = {
+			isa = PBXGroup;
+			children = (
+				815B47271DE7DF3A002E0444 /* SQLiteOperation.swift */,
+			);
+			path = SQLiteOperation;
 			sourceTree = "<group>";
 		};
 		95F218D811E0EE7C16B750F8 /* Pods */ = {
@@ -438,12 +469,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 81713CAA1DB8664300EDAEEF /* Build configuration list for PBXNativeTarget "SwiftProject" */;
 			buildPhases = (
-				9C17BC97A8CAA186A9164737 /* [CP] Check Pods Manifest.lock */,
+				C0C4D71E3281F1C5AE9728AB /* [CP] Check Pods Manifest.lock */,
 				81713C7E1DB8664200EDAEEF /* Sources */,
 				81713C7F1DB8664200EDAEEF /* Frameworks */,
 				81713C801DB8664200EDAEEF /* Resources */,
-				4AF6615447BF5B63D818A1F6 /* [CP] Embed Pods Frameworks */,
-				9F1AEF36C2D749BF1A0E2669 /* [CP] Copy Pods Resources */,
+				CCC498059978434B1CBD535F /* [CP] Embed Pods Frameworks */,
+				598594C648DA2AD1D0ED2F82 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -484,6 +515,7 @@
 				81713C9E1DB8664300EDAEEF /* Frameworks */,
 				81713C9F1DB8664300EDAEEF /* Resources */,
 				DC8E7B3729FBF60261541A1D /* [CP] Copy Pods Resources */,
+				D8F744CF4171C1A75D4DD8D3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -597,19 +629,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4AF6615447BF5B63D818A1F6 /* [CP] Embed Pods Frameworks */ = {
+		598594C648DA2AD1D0ED2F82 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftProject/Pods-SwiftProject-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftProject/Pods-SwiftProject-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		697F62443CD268C5DFE98A4F /* [CP] Check Pods Manifest.lock */ = {
@@ -624,10 +656,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		9C17BC97A8CAA186A9164737 /* [CP] Check Pods Manifest.lock */ = {
+		C0C4D71E3281F1C5AE9728AB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -639,22 +671,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		9F1AEF36C2D749BF1A0E2669 /* [CP] Copy Pods Resources */ = {
+		CCC498059978434B1CBD535F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftProject/Pods-SwiftProject-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftProject/Pods-SwiftProject-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CF11DB4F602F77A49369422D /* [CP] Embed Pods Frameworks */ = {
@@ -670,6 +702,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftProjectTests/Pods-SwiftProjectTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D8F744CF4171C1A75D4DD8D3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftProjectUITests/Pods-SwiftProjectUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DC8E7B3729FBF60261541A1D /* [CP] Copy Pods Resources */ = {
@@ -699,7 +746,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		FE8259D418A77D7FF42AEEC0 /* [CP] Copy Pods Resources */ = {
@@ -730,18 +777,23 @@
 				81713CBC1DB8B17300EDAEEF /* LoginTextField.swift in Sources */,
 				81310E071DE58CCD005B704A /* FileField.swift in Sources */,
 				81AF488F1DD9AA86001E7EAA /* Package.swift in Sources */,
+				818577551DE6F56E001462FD /* VerifyField.swift in Sources */,
 				812195131DD2F0AD0071FAB5 /* Defines.swift in Sources */,
 				81AF48911DDAAE6F001E7EAA /* TextField.swift in Sources */,
 				8181963E1DD5682900C6A71D /* Field.swift in Sources */,
 				81713C861DB8664200EDAEEF /* AppDelegate.swift in Sources */,
 				812195101DD2EDC50071FAB5 /* MessageOtherCell.swift in Sources */,
+				815B472C1DE84538002E0444 /* ContentField.swift in Sources */,
 				81713CB51DB8AA4200EDAEEF /* LoginViewController.swift in Sources */,
 				811A1BC71DC872390078C44C /* SettingTableViewController.swift in Sources */,
 				81713CC71DBE0FC100EDAEEF /* Extensions.swift in Sources */,
 				814A3E821DC20AB9007CF48D /* MessageTableViewCell.swift in Sources */,
 				814A3E661DBF353F007CF48D /* MainTabViewController.swift in Sources */,
+				815B472E1DE84814002E0444 /* AttatchmentField.swift in Sources */,
 				814A3E851DC20C5D007CF48D /* MessageModel.swift in Sources */,
 				814A3E7F1DC1E87B007CF48D /* MessageTableViewController.swift in Sources */,
+				815B472A1DE7E5A6002E0444 /* ReadPath.swift in Sources */,
+				815B47281DE7DF3A002E0444 /* SQLiteOperation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -925,7 +977,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C2EC36CDF118FFFD0A7F46FA /* Pods-SwiftProjectTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SwiftProjectTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -940,7 +992,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8F214C7493CE2CBCB34FE828 /* Pods-SwiftProjectTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SwiftProjectTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -955,7 +1007,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AA0FDA7144EA634AC06D827F /* Pods-SwiftProjectUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				INFOPLIST_FILE = SwiftProjectUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JiuYiKeJi.SwiftProjectUITests;
@@ -969,7 +1021,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FFEFB5BEE392A49757F1CF93 /* Pods-SwiftProjectUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				INFOPLIST_FILE = SwiftProjectUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JiuYiKeJi.SwiftProjectUITests;

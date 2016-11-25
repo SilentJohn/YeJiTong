@@ -8,6 +8,7 @@ target 'SwiftProject' do
   pod 'SnapKit', '~> 3.0.1'
   pod 'MBProgressHUD', '~> 1.0.0'
   pod 'Alamofire', '~> 4.0.1'
+  pod 'FMDB', '~> 2.6.2'
   # Pods for SwiftProject
 
   target 'SwiftProjectTests' do

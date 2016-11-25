@@ -1,18 +1,23 @@
 PODS:
   - Alamofire (4.0.1)
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
   - MBProgressHUD (1.0.0)
   - SnapKit (3.0.1)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0.1)
+  - FMDB (~> 2.6.2)
   - MBProgressHUD (~> 1.0.0)
   - SnapKit (~> 3.0.1)
 
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   SnapKit: f818b8326d45b4e1c777d0ab27b5c0a3624bfdeb
 
-PODFILE CHECKSUM: 22685662504df25127e8e135b96f6eef48ccf26b
+PODFILE CHECKSUM: d9273e7a3612980972f80faa0c759f2b64336900
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1
