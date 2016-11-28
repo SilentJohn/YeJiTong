@@ -43,9 +43,9 @@ class NetRequestManager {
                 } else {
                     print(error.debugDescription)
                     OperationQueue.main.addOperation {
-                        if failure {
-                            
-                        }
+//                        if failure {
+//                            
+//                        }
                     }
                 }
             })

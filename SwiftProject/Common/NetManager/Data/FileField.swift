@@ -1,19 +1,33 @@
 //
-//  TextField.swift
+//  FileField.swift
 //  SwiftProject
 //
-//  Created by IOS on 2016/11/15.
+//  Created by IOS on 2016/11/23.
 //  Copyright © 2016年 IOS. All rights reserved.
 //
 
 import Foundation
 
-class TextField: Field {
+class FileField: Field {
     var jsonLen: Int = 0
     var json: String?
+    var fileContentLen: Int = 0
+    private var _fileContentBuf: Data?
+    var fileContentBuf: Data? {
+        set {
+            _fileContentBuf = newValue
+            fileContentLen = fileContentBuf!.count
+            fieldContentLength = UInt32(getFieldLength())
+        }
+        get {
+            return _fileContentBuf
+        }
+    }
     
-    func setJsonString(rootDict: [AnyHashable:Any]) {
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: rootDict, options: .prettyPrinted) else {
+    func setFileNames(rootDict: [AnyHashable:Any]) {
+        var newDic: Dictionary = rootDict
+        newDic.removeValue(forKey: "BUF")
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: newDic, options: .prettyPrinted) else {
             json = nil
             jsonLen = 0
             fieldContentLength = 0
@@ -21,19 +35,19 @@ class TextField: Field {
         }
         json = String(data: jsonData, encoding: .utf8)
         jsonLen = json!.lengthOfBytes(using: .utf8)
-        fieldContentLength = UInt32(getFieldLength())
     }
     
     func getFieldLength() -> Int {
-        return MemoryLayout.size(ofValue: jsonLen) + jsonLen
+        return MemoryLayout.size(ofValue: jsonLen) + MemoryLayout.size(ofValue: fileContentLen) + jsonLen + fileContentLen
     }
-    
     override func serialize(serializedData: inout Data) {
         super.serialize(serializedData: &serializedData)
         serializedData.append(Utility.data(fromUInt32: UInt32(jsonLen)))
         if let jsonData = json?.data(using: .utf8) {
             serializedData.append(jsonData)
         }
+        serializedData.append(Utility.data(fromUInt32: UInt32(fileContentLen)))
+        serializedData.append(fileContentBuf!)
     }
     override func deserialize(fromData: Data, start: Data.Index, end: Data.Index) -> Bool {
         guard super.deserialize(fromData: fromData, start: start, end: end) else {
@@ -53,6 +67,17 @@ class TextField: Field {
             return false
         }
         json = String(data: fromData.subdata(in: Range(curIndex..<curIndex.advanced(by: jsonLen))), encoding: .utf8)
+        guard curIndex.advanced(by: MemoryLayout.size(ofValue: UInt32.self)) <= end else {
+            NSLog("Cannot figure out text field content length")
+            return false
+        }
+        fileContentLen = Utility.int(fromData: fromData, start: curIndex, length: MemoryLayout.size(ofValue: UInt32.self))
+        curIndex = curIndex.advanced(by: MemoryLayout.size(ofValue: UInt32.self))
+        guard curIndex.advanced(by: MemoryLayout.size(ofValue: UInt32.self)) <= end else {
+            NSLog("content too short")
+            return false
+        }
+        fileContentBuf = fromData.subdata(in: Range(curIndex..<curIndex.advanced(by: fileContentLen)))
         return true
     }
 }
