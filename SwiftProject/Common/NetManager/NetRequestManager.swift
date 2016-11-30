@@ -13,14 +13,12 @@ let soapEndpoint: String = "http://115.28.42.18:18084/axis2/services/YeJiTongSer
 let methodName: String = "handleService"
 
 
-class NetRequestManager {
+class NetRequestManager: XMLParserDelegate {
     
     static let shared = NetRequestManager()
     private init() {
         
     }
-    
-    var webData: Data = Data()
     
     func send(contentDic: [AnyHashable:Any]? = nil, attatchmentArray: [[AnyHashable:Any]]? = nil, tid: Int, requestID: Int, success: (@escaping ([AnyHashable:Any], Int, Int) -> Void), failure: (@escaping (String, Int) -> Void)) {
         guard let package = contrustPackageData(contentDic: contentDic, attatchmentArray: attatchmentArray, tid: tid, requestID: requestID) else {
@@ -39,13 +37,18 @@ class NetRequestManager {
             urlRequest.httpBody = soapMessage.data(using: .utf8)
             let dataTask = URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, urlResponse, error) in
                 if error == nil {
-                    
+                    let xmlPaser = XMLParser(data: data!)
+                    xmlPaser.delegate = self
+                    xmlPaser.shouldResolveExternalEntities = true
+                    if xmlPaser.parse() {
+                        print("XML parse succeed")
+                    } else {
+                        print("XML parse fail")
+                    }
                 } else {
                     print(error.debugDescription)
                     OperationQueue.main.addOperation {
-//                        if failure {
-//                            
-//                        }
+                        failure(error.debugDescription, tid)
                     }
                 }
             })
@@ -79,5 +82,10 @@ class NetRequestManager {
             }
         }
         return package
+    }
+    
+    /// MARK: XML parser delegate
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+        
     }
 }
