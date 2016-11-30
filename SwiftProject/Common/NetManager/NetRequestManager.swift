@@ -8,23 +8,40 @@
 
 import Foundation
 
+enum TID: Int32 {
+    case UNKNOWNREQRSP = 0x00000000
+    
+}
+
 let soapNamespace: String = "http://WebService.teddy.com"
 let soapEndpoint: String = "http://115.28.42.18:18084/axis2/services/YeJiTongService?wsdl"
 let methodName: String = "handleService"
 
 
-class NetRequestManager: XMLParserDelegate {
+let errorDesc1 = "网络异常，请稍后重试"
+
+
+class NetRequestManager: NSObject, XMLParserDelegate {
     
     static let shared = NetRequestManager()
-    private init() {
+    private override init() {
         
     }
     
-    func send(contentDic: [AnyHashable:Any]? = nil, attatchmentArray: [[AnyHashable:Any]]? = nil, tid: Int, requestID: Int, success: (@escaping ([AnyHashable:Any], Int, Int) -> Void), failure: (@escaping (String, Int) -> Void)) {
+    lazy var soapResults: String = { String() }()
+    var recordResults: Bool = false
+    
+    var tid: TID?
+    var success: (([AnyHashable:Any], TID, Int) -> Void)?
+    var failure: ((String, TID) -> Void)?
+    
+    func send(contentDic: [AnyHashable:Any]? = nil, attatchmentArray: [[AnyHashable:Any]]? = nil, tid: TID, requestID: Int, success: (@escaping ([AnyHashable:Any], TID, Int) -> Void), failure: (@escaping (String, TID) -> Void)) {
         guard let package = contrustPackageData(contentDic: contentDic, attatchmentArray: attatchmentArray, tid: tid, requestID: requestID) else {
             print("Package nil")
             return
         }
+        self.success = success
+        self.failure = failure
         let data = package.serialize()
         let base64Data = data.base64EncodedString(options: .lineLength64Characters)
         let soapMessage = "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:web=\"\(soapNamespace)\"><soap:Header/><soap:Body><web:handleService><web:param>\(base64Data)</web:param></web:handleService></soap:Body></soap:Envelope>"
@@ -48,7 +65,7 @@ class NetRequestManager: XMLParserDelegate {
                 } else {
                     print(error.debugDescription)
                     OperationQueue.main.addOperation {
-                        failure(error.debugDescription, tid)
+                        failure(errorDesc1, tid)
                     }
                 }
             })
@@ -56,7 +73,7 @@ class NetRequestManager: XMLParserDelegate {
         }
         
     }
-    private func contrustPackageData(contentDic: [AnyHashable:Any]? = nil, attatchmentArray: [[AnyHashable:Any]]? = nil, tid: Int, requestID: Int) -> Package? {
+    private func contrustPackageData(contentDic: [AnyHashable:Any]? = nil, attatchmentArray: [[AnyHashable:Any]]? = nil, tid: TID, requestID: Int) -> Package? {
         let package = Package(tid: tid, requestID: requestID)
         let verify = VerifyField.field()
         package.addField(verify)
@@ -86,6 +103,35 @@ class NetRequestManager: XMLParserDelegate {
     
     /// MARK: XML parser delegate
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-        
+        if elementName == "ns:return" {
+            recordResults = true
+        }
+    }
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
+        soapResults.append(string)
+    }
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        if elementName == "ns:return" {
+            recordResults = false
+            guard let data = Data(base64Encoded: soapResults, options: .ignoreUnknownCharacters) else {
+                print("Nil data")
+                return
+            }
+            let rcvPackage = Package()
+            _ = rcvPackage.deserialize(fromData: data, start: data.startIndex, end: data.endIndex)
+            if rcvPackage.header.tid == .UNKNOWNREQRSP {
+                OperationQueue.main.addOperation {
+                    if self.failure != nil {
+                        self.failure!(errorDesc1, rcvPackage.header.tid)
+                    }
+                }
+            } else {
+                OperationQueue.main.addOperation {
+                    if self.success != nil {
+//                        self.success!(rc)
+                    }
+                }
+            }
+        }
     }
 }

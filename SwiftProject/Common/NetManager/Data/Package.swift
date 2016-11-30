@@ -9,13 +9,13 @@
 import Foundation
 
 class PackageHeader {
-    var tid: Int = 0
+    var tid: TID = TID(rawValue: 0)!
     var requestID: Int = 0
     var contentLen: Int = 0
     
     init() {}
     
-    init(tid transID: Int, requestID reqID: Int) {
+    init(tid transID: TID, requestID reqID: Int) {
         tid = transID
         requestID = reqID
         contentLen = 0
@@ -26,7 +26,7 @@ class PackageHeader {
     }
     
     func serialize(serializedData: inout Data){
-        serializedData.append(Utility.data(fromUInt32: UInt32(tid)))
+        serializedData.append(Utility.data(fromUInt32: UInt32(tid.rawValue)))
         serializedData.append(Utility.data(fromUInt32: UInt32(requestID)))
         serializedData.append(Utility.data(fromUInt32: UInt32(contentLen)))
     }
@@ -41,7 +41,7 @@ class PackageHeader {
             NSLog("Content too short")
             return
         }
-        tid = Utility.int(fromData: data, start: from, length: MemoryLayout.size(ofValue: Int.self))
+        tid = TID(rawValue: Int32(Utility.int(fromData: data, start: from, length: MemoryLayout.size(ofValue: Int.self))))!
         requestID = Utility.int(fromData: data, start: from + MemoryLayout.size(ofValue: Int.self), length: MemoryLayout.size(ofValue: Int.self))
         contentLen = Utility.int(fromData: data, start: from + MemoryLayout.size(ofValue: Int.self) * 2, length: MemoryLayout.size(ofValue: Int.self))
     }
@@ -52,8 +52,12 @@ class Package {
     var fields: [Field] = [Field]()
     var header: PackageHeader = PackageHeader()
     
-    init(tid transID: Int, requestID reqID: Int) {
+    init(tid transID: TID, requestID reqID: Int) {
         header = PackageHeader(tid: transID, requestID: reqID)
+    }
+    
+    init() {
+        
     }
     
     func serialize() -> Data {
