@@ -8,11 +8,6 @@
 
 import Foundation
 
-enum TID: Int32 {
-    case UNKNOWNREQRSP = 0x00000000
-    
-}
-
 let soapNamespace: String = "http://WebService.teddy.com"
 let soapEndpoint: String = "http://115.28.42.18:18084/axis2/services/YeJiTongService?wsdl"
 let methodName: String = "handleService"
@@ -32,10 +27,10 @@ class NetRequestManager: NSObject, XMLParserDelegate {
     var recordResults: Bool = false
     
     var tid: TID?
-    var success: (([AnyHashable:Any], TID, Int) -> Void)?
-    var failure: ((String, TID) -> Void)?
+    private var success: (([AnyHashable:Any], TID, Int) throws -> Void)?
+    private var failure: ((String, TID) -> Void)?
     
-    func send(contentDic: [AnyHashable:Any]? = nil, attatchmentArray: [[AnyHashable:Any]]? = nil, tid: TID, requestID: Int, success: (@escaping ([AnyHashable:Any], TID, Int) -> Void), failure: (@escaping (String, TID) -> Void)) {
+    open func send(contentDic: [AnyHashable:Any]? = nil, attatchmentArray: [[AnyHashable:Any]]? = nil, tid: TID, requestID: Int, success: (@escaping ([AnyHashable:Any], TID, Int) throws -> Void), failure: (@escaping (String, TID) -> Void)) {
         guard let package = contrustPackageData(contentDic: contentDic, attatchmentArray: attatchmentArray, tid: tid, requestID: requestID) else {
             print("Package nil")
             return
@@ -121,14 +116,63 @@ class NetRequestManager: NSObject, XMLParserDelegate {
             _ = rcvPackage.deserialize(fromData: data, start: data.startIndex, end: data.endIndex)
             if rcvPackage.header.tid == .UNKNOWNREQRSP {
                 OperationQueue.main.addOperation {
-                    if self.failure != nil {
-                        self.failure!(errorDesc1, rcvPackage.header.tid)
-                    }
+                    self.failure?(errorDesc1, rcvPackage.header.tid)
                 }
             } else {
                 OperationQueue.main.addOperation {
-                    if self.success != nil {
-//                        self.success!(rc)
+                    let array = rcvPackage.fields
+                    let respTid = rcvPackage.header.tid
+                    let requestId = rcvPackage.header.requestID
+                    if array.count == 1 {
+                        guard let textField = array[0] as? TextField else {
+                            print("Invalid text field")
+                            return
+                        }
+                        guard let data = textField.json?.data(using: .utf8) else {
+                            print("No json data")
+                            return
+                        }
+                        guard let rltDic = try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? [AnyHashable:Any] else {
+                            print("Json data cannot be resolved")
+                            return
+                        }
+                        guard let rltCode = rltDic?["rlt_code"] as? Int else {
+                            print("Invalid result code")
+                            return
+                        }
+                        switch respTid {
+                        case .LOGINRSQ:
+                            self.success?(rltDic!, respTid, requestId)
+                        default:
+                            var dic = [AnyHashable:Any]()
+                            switch rltCode {
+                            case 0:
+                                dic["rlt_code"] = -1
+                            case 1:
+                                dic["rlt_code"] = -2
+                            case 2:
+                                dic["rlt_code"] = -3
+                            default:
+                                break
+                            }
+                            self.success?(dic, respTid, requestId)
+                        }
+                    } else if array.count == 2 {
+                        guard let textField = array[1] as? TextField else {
+                            print("Invalid text field")
+                            return
+                        }
+                        guard let data = textField.json?.data(using: .utf8) else {
+                            print("No json data")
+                            return
+                        }
+                        guard let rltDic = try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? [AnyHashable:Any] else {
+                            print("Json data cannot be resolved")
+                            return
+                        }
+                        self.success?(rltDic!, respTid, requestId)
+                    } else {
+                        self.failure?(errorDesc1, respTid)
                     }
                 }
             }

@@ -42,6 +42,7 @@
 		815B472A1DE7E5A6002E0444 /* ReadPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815B47291DE7E5A6002E0444 /* ReadPath.swift */; };
 		815B472C1DE84538002E0444 /* ContentField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815B472B1DE84538002E0444 /* ContentField.swift */; };
 		815B472E1DE84814002E0444 /* AttatchmentField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815B472D1DE84814002E0444 /* AttatchmentField.swift */; };
+		816B2A4C1DF021BC00AFB205 /* CommonDefines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B2A4B1DF021BC00AFB205 /* CommonDefines.swift */; };
 		81713C861DB8664200EDAEEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81713C851DB8664200EDAEEF /* AppDelegate.swift */; };
 		81713C8B1DB8664200EDAEEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81713C891DB8664200EDAEEF /* Main.storyboard */; };
 		81713C8D1DB8664200EDAEEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81713C8C1DB8664200EDAEEF /* Assets.xcassets */; };
@@ -116,6 +117,7 @@
 		815B47291DE7E5A6002E0444 /* ReadPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadPath.swift; sourceTree = "<group>"; };
 		815B472B1DE84538002E0444 /* ContentField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentField.swift; sourceTree = "<group>"; };
 		815B472D1DE84814002E0444 /* AttatchmentField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttatchmentField.swift; sourceTree = "<group>"; };
+		816B2A4B1DF021BC00AFB205 /* CommonDefines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonDefines.swift; sourceTree = "<group>"; };
 		81713C821DB8664200EDAEEF /* SwiftProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81713C851DB8664200EDAEEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81713C8A1DB8664200EDAEEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 				812195141DD30CBE0071FAB5 /* NetManager */,
 				818577561DE6F7CB001462FD /* SQLiteOperation */,
 				815B47261DE7DC2B002E0444 /* ReadPath */,
+				816B2A4B1DF021BC00AFB205 /* CommonDefines.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -792,6 +795,7 @@
 				815B472E1DE84814002E0444 /* AttatchmentField.swift in Sources */,
 				814A3E851DC20C5D007CF48D /* MessageModel.swift in Sources */,
 				814A3E7F1DC1E87B007CF48D /* MessageTableViewController.swift in Sources */,
+				816B2A4C1DF021BC00AFB205 /* CommonDefines.swift in Sources */,
 				815B472A1DE7E5A6002E0444 /* ReadPath.swift in Sources */,
 				815B47281DE7DF3A002E0444 /* SQLiteOperation.swift in Sources */,
 			);

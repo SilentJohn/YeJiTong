@@ -37,7 +37,7 @@ class VerifyField: Field {
     required override init(fieldID: UInt16) {
         super.init(fieldID: fieldID)
         var dic: [AnyHashable:Any] = [AnyHashable:Any]()
-        dic["app_version"] = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString")
+        dic["app_version"] = appVersion
         dic["validation_code"] = SQLiteOperation.getMyData(key: kValidationCode)
         dic["devide_type"] = "2"
         dic["node_id"] = SQLiteOperation.getMyData(key: kNodeId)

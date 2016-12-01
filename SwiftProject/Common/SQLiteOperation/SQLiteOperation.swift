@@ -90,7 +90,7 @@ class SQLiteOperation {
         }
     }
     
-    ///MARK: MYDATA table
+    // MARK: - MYDATA table
     class func saveMyData(dic: [AnyHashable:Any]) {
         SQLiteOperation.modifyFrom(table: "MYDATA", keyValue: dic, where: "ID='1'")
     }

@@ -49,7 +49,7 @@ class PackageHeader {
 
 class Package {
     
-    var fields: [Field] = [Field]()
+    private(set) var fields: [Field] = [Field]()
     var header: PackageHeader = PackageHeader()
     
     init(tid transID: TID, requestID reqID: Int) {

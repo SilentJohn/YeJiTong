@@ -9,6 +9,14 @@
 import UIKit
 import MBProgressHUD
 
+// MARK: - Login dictionary keys
+let userNameKey = "user_name"
+let userPassKey = "user_pwd"
+let userDeviceKey = "device_info"
+let userForcedLoginKey = "forced_login"
+let appVersionKey = "app_version"
+let deviceTypeKey = "device_type"
+
 class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var txtUserName: LoginTextField!
@@ -71,30 +79,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         return false
     }
     
-    private enum LoginError: Error {
-        case UserNameNil
-        case UserNameNotExist
-        case PasswordNil
-        case PasswordIncorrect
-    }
-    
     @IBAction func btnLogin(_ sender: UIButton?) {
         NSLog("Try to login!")
         var result: Bool?
         do {
-            result = try checkLogin()
+            result = try checkLogin(userForcedLogin:"0")
         } catch LoginError.UserNameNil {
             NSLog("UserName is nil")
-            MBProgressHUD.show(error: "用户名不能为空", view: view)
+            MBProgressHUD.show(error: "请输入用户名", view: view)
         } catch LoginError.PasswordNil {
             NSLog("Password is nil")
-            MBProgressHUD.show(error: "密码不能为空", view: view)
-        } catch LoginError.UserNameNotExist {
+            MBProgressHUD.show(error: "请输入密码", view: view)
+        } catch LoginError.UserNameNotExistOrPasswordIncorrect {
             NSLog("UserName is not exist")
-            MBProgressHUD.show(error: "用户名不存在", view: view)
-        } catch LoginError.PasswordIncorrect {
-            NSLog("Password is incorrect")
-            MBProgressHUD.show(error: "密码不正确", view: view)
+            MBProgressHUD.show(error: "用户名或者密码错误", view: view)
         } catch {
             
         }
@@ -116,12 +114,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         })
     }
     
-    func checkLogin() throws -> Bool {
-        guard txtUserName.text != nil && txtUserName.text != "" else {
+    func checkLogin(userForcedLogin: String) throws -> Bool {
+        guard let userName = txtUserName.text, userName.characters.count > 0 else {
             throw LoginError.UserNameNil
         }
-        guard txtPassword.text != nil && txtPassword.text != "" else {
+        guard let password = txtPassword.text, password.characters.count > 0 else {
             throw LoginError.PasswordNil
+        }
+        MBProgressHUD.showAdded(to: view, animated: true)
+        let deviceAndiOSVersion = "\(UIDevice.current.deviceString()) + IOS\(iOSVersion)"
+        let loginDic = [userNameKey:userName, userPassKey:password, userDeviceKey:deviceAndiOSVersion, userForcedLoginKey:userForcedLogin, deviceTypeKey:"2", appVersionKey:appVersion]
+        NetRequestManager.shared.send(contentDic: loginDic, tid: .LOGINREQ, requestID: 4, success: { (dic, tid, requestId) in
+            guard let rltCode = dic["rlt_code"] as? Int else {
+                print("Invalid result code")
+                return
+            }
+            switch rltCode {
+            case 0:
+                throw LoginError.UserNameNotExistOrPasswordIncorrect
+            }
+            }) { (error, tid) in
+                
         }
         return true
     }
