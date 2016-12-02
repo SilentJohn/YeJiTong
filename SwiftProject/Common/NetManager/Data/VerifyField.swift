@@ -13,12 +13,10 @@ let kNodeId = "kNode_id"
 
 class VerifyField: Field {
     
-    private var _contentDic: [AnyHashable:Any]?
     private var contentDic: [AnyHashable:Any]? {
-        set {
-            _contentDic = newValue
+        didSet {
             do {
-                contentData = try JSONSerialization.data(withJSONObject: newValue, options: .prettyPrinted)
+                contentData = try JSONSerialization.data(withJSONObject: contentDic, options: .prettyPrinted)
                 if contentData != nil {
                     contentDataLen = contentData!.count
                     fieldContentLength = UInt32(getFieldLength())
@@ -26,9 +24,6 @@ class VerifyField: Field {
             } catch {
                 print("error: \(error)")
             }
-        }
-        get {
-            return _contentDic
         }
     }
     private var contentData: Data?

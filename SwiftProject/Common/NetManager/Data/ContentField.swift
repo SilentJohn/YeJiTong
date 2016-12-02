@@ -9,12 +9,16 @@
 import Foundation
 
 class ContentField: Field {
-    private var _contentDic: [AnyHashable:Any]?
     var contentDic: [AnyHashable:Any]? {
-        set {
-            _contentDic = newValue
+        didSet {
             do {
-                contentData = try JSONSerialization.data(withJSONObject: newValue, options: .prettyPrinted)
+                var tempDic = [AnyHashable:Any]()
+                
+                for (key, value) in contentDic! {
+                    tempDic[key] = value
+                }
+                print("\(tempDic)")
+                contentData = try JSONSerialization.data(withJSONObject: contentDic!, options: .prettyPrinted)
                 if contentData != nil {
                     contentDataLen = contentData!.count
                     fieldContentLength = UInt32(getFieldLength())
@@ -22,9 +26,6 @@ class ContentField: Field {
             } catch {
                 print("error: \(error)")
             }
-        }
-        get {
-            return _contentDic
         }
     }
     private var contentData: Data?

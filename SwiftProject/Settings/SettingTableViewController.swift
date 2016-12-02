@@ -45,7 +45,7 @@ class SettingTableViewController: UITableViewController {
     func logOut() {
         MBProgressHUD.show(messages: "注销成功", view: UIApplication.shared.keyWindow)
         repeat {
-            UserDefaults.standard.set(false, forKey: "login")
+            UserDefaults.standard.set(false, forKey: loginStateKey)
         } while UserDefaults.standard.synchronize() == false
         var rootViewController = self.parent
         while rootViewController as? RootViewController == nil {

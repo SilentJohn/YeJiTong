@@ -27,10 +27,10 @@ class NetRequestManager: NSObject, XMLParserDelegate {
     var recordResults: Bool = false
     
     var tid: TID?
-    private var success: (([AnyHashable:Any], TID, Int) throws -> Void)?
+    private var success: (([AnyHashable:Any], TID, Int) -> Void)?
     private var failure: ((String, TID) -> Void)?
     
-    open func send(contentDic: [AnyHashable:Any]? = nil, attatchmentArray: [[AnyHashable:Any]]? = nil, tid: TID, requestID: Int, success: (@escaping ([AnyHashable:Any], TID, Int) throws -> Void), failure: (@escaping (String, TID) -> Void)) {
+    open func send(contentDic: [AnyHashable:Any]? = nil, attatchmentArray: [[AnyHashable:Any]]? = nil, tid: TID, requestID: Int, success: (@escaping ([AnyHashable:Any], TID, Int) -> Void), failure: (@escaping (String, TID) -> Void)) {
         guard let package = contrustPackageData(contentDic: contentDic, attatchmentArray: attatchmentArray, tid: tid, requestID: requestID) else {
             print("Package nil")
             return
@@ -70,8 +70,10 @@ class NetRequestManager: NSObject, XMLParserDelegate {
     }
     private func contrustPackageData(contentDic: [AnyHashable:Any]? = nil, attatchmentArray: [[AnyHashable:Any]]? = nil, tid: TID, requestID: Int) -> Package? {
         let package = Package(tid: tid, requestID: requestID)
-        let verify = VerifyField.field()
-        package.addField(verify)
+        if tid != .LOGINREQ {
+            let verify = VerifyField.field()
+            package.addField(verify)
+        }
         if let tempContenDic = contentDic {
             let contentField = ContentField(fieldID: 0x0005)
             contentField.contentDic = tempContenDic

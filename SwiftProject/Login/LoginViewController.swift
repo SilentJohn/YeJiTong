@@ -19,8 +19,8 @@ let deviceTypeKey = "device_type"
 
 class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
-    @IBOutlet weak var txtUserName: LoginTextField!
-    @IBOutlet weak var txtPassword: LoginTextField!
+    @IBOutlet private weak var txtUserName: LoginTextField!
+    @IBOutlet private weak var txtPassword: LoginTextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,42 +79,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         return false
     }
     
-    @IBAction func btnLogin(_ sender: UIButton?) {
+    @IBAction private func btnLogin(_ sender: UIButton?) {
         NSLog("Try to login!")
-        var result: Bool?
         do {
-            result = try checkLogin(userForcedLogin:"0")
+            try checkLogin(userForcedLogin:"0")
         } catch LoginError.UserNameNil {
             NSLog("UserName is nil")
             MBProgressHUD.show(error: "请输入用户名", view: view)
         } catch LoginError.PasswordNil {
             NSLog("Password is nil")
             MBProgressHUD.show(error: "请输入密码", view: view)
-        } catch LoginError.UserNameNotExistOrPasswordIncorrect {
-            NSLog("UserName is not exist")
-            MBProgressHUD.show(error: "用户名或者密码错误", view: view)
         } catch {
             
         }
-        guard result == true else {
-            NSLog("Unknown error")
-            return
-        }
-        repeat {
-            UserDefaults.standard.set(true, forKey: "login")
-        } while UserDefaults.standard.synchronize() == false
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let mainTabController = storyBoard.instantiateViewController(withIdentifier: "main") as! MainTabViewController
-        parent?.addChildViewController(mainTabController)
-        parent?.transition(from: self
-            , to: mainTabController, duration: 1.5, options: .transitionFlipFromRight, animations: {
-                
-            }, completion: { (finished) in
-                
-        })
     }
     
-    func checkLogin(userForcedLogin: String) throws -> Bool {
+    private func checkLogin(userForcedLogin: String) throws {
         guard let userName = txtUserName.text, userName.characters.count > 0 else {
             throw LoginError.UserNameNil
         }
@@ -125,18 +105,52 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         let deviceAndiOSVersion = "\(UIDevice.current.deviceString()) + IOS\(iOSVersion)"
         let loginDic = [userNameKey:userName, userPassKey:password, userDeviceKey:deviceAndiOSVersion, userForcedLoginKey:userForcedLogin, deviceTypeKey:"2", appVersionKey:appVersion]
         NetRequestManager.shared.send(contentDic: loginDic, tid: .LOGINREQ, requestID: 4, success: { (dic, tid, requestId) in
+            MBProgressHUD.hide(for: self.view, animated: true)
             guard let rltCode = dic["rlt_code"] as? Int else {
                 print("Invalid result code")
                 return
             }
             switch rltCode {
             case 0:
-                throw LoginError.UserNameNotExistOrPasswordIncorrect
+                MBProgressHUD.show(error: "用户名或者密码错误", view: self.view)
+            case 1:
+                self.didLogin(userInfo: dic)
+            case 2:
+                MBProgressHUD.show(error: "该账号处于停用状态", view: self.view)
+            case 3:
+                MBProgressHUD.show(messages: "软件版本过低，请及时升级", view: self.view)
+            case 4:
+                let alert = UIAlertController(title: "提示", message: "该账号已在其它设备登录，是否强行登录？", preferredStyle: .alert)
+                let cancel = UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
+                    
+                })
+                let forcedLogin = UIAlertAction(title: "强制登录", style: .destructive, handler: { (action) in
+                    try! self.checkLogin(userForcedLogin: "1")
+                })
+                alert.addAction(cancel)
+                alert.addAction(forcedLogin)
+                self.present(alert, animated: true)
+            default:
+                print("Unrecognized result code")
             }
             }) { (error, tid) in
-                
+                MBProgressHUD.hide(for: self.view, animated: true)
+                MBProgressHUD.show(error: error, view: self.view)
         }
-        return true
+    }
+    
+    func didLogin(userInfo: [AnyHashable:Any]) {
+        UserDefaults.standard.set(true, forKey: loginStateKey)
+        
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let mainTabController = storyBoard.instantiateViewController(withIdentifier: "main") as! MainTabViewController
+        parent?.addChildViewController(mainTabController)
+        parent?.transition(from: self
+            , to: mainTabController, duration: 1.5, options: .transitionFlipFromRight, animations: {
+                
+            }, completion: { (finished) in
+                
+        })
     }
 }
 

@@ -9,12 +9,10 @@
 import Foundation
 
 class AttatchmentField: Field {
-    private var _contentDic: [AnyHashable:Any]?
     var contentDic: [AnyHashable:Any]? {
-        set {
-            _contentDic = newValue
+        didSet {
             do {
-                contentData = try JSONSerialization.data(withJSONObject: newValue, options: .prettyPrinted)
+                contentData = try JSONSerialization.data(withJSONObject: contentDic, options: .prettyPrinted)
                 if contentData != nil {
                     contentDataLen = contentData!.count
                 }
@@ -22,9 +20,6 @@ class AttatchmentField: Field {
             } catch  {
                 print("error: \(error)")
             }
-        }
-        get {
-            return _contentDic
         }
     }
     

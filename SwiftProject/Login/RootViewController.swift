@@ -14,7 +14,7 @@ class RootViewController: UIViewController {
         super.viewDidLoad()
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
 //        self.navigationController!.isNavigationBarHidden = true
-        if UserDefaults.standard.bool(forKey: "login") {
+        if UserDefaults.standard.bool(forKey: loginStateKey) {
             let mainTabController = storyBoard.instantiateViewController(withIdentifier: "main") as! MainTabViewController
             self.addChildViewController(mainTabController)
             self.view.addSubview(mainTabController.view)

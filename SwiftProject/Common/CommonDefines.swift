@@ -10,7 +10,6 @@ import UIKit
 
 public enum LoginError: Error {
     case UserNameNil
-    case UserNameNotExistOrPasswordIncorrect
     case PasswordNil
 }
 
@@ -22,3 +21,9 @@ public enum TID: Int32 {
 
 public let iOSVersion = UIDevice.current.systemVersion
 public let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString")
+
+// MARK: - Login keys and values
+public let forcibleLoginVersionKey = "forcibleLoginVersion"
+public let forcibleLoginVersionValue = "1"
+
+public let loginStateKey = "kLoginState"
