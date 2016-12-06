@@ -49,10 +49,10 @@ class NetRequestManager: NSObject, XMLParserDelegate {
             urlRequest.httpBody = soapMessage.data(using: .utf8)
             let dataTask = URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, urlResponse, error) in
                 if error == nil {
-                    let xmlPaser = XMLParser(data: data!)
-                    xmlPaser.delegate = self
-                    xmlPaser.shouldResolveExternalEntities = true
-                    if xmlPaser.parse() {
+                    let xmlParser = XMLParser(data: data!)
+                    xmlParser.delegate = self
+                    xmlParser.shouldResolveExternalEntities = true
+                    if xmlParser.parse() {
                         print("XML parse succeed")
                     } else {
                         print("XML parse fail")
@@ -69,7 +69,7 @@ class NetRequestManager: NSObject, XMLParserDelegate {
         
     }
     private func contrustPackageData(contentDic: [AnyHashable:Any]? = nil, attatchmentArray: [[AnyHashable:Any]]? = nil, tid: TID, requestID: Int) -> Package? {
-        let package = Package(tid: tid, requestID: requestID)
+        let package = Package(tid: tid, requestID: Int32(requestID))
         if tid != .LOGINREQ {
             let verify = VerifyField.field()
             package.addField(verify)
@@ -83,9 +83,7 @@ class NetRequestManager: NSObject, XMLParserDelegate {
             for attatchmentDic in tempAttatchmentArray {
                 let attatchment = AttatchmentField(fieldID: 0x0006)
                 if case let value as [AnyHashable:Any]? = attatchmentDic["contentDic"] {
-                    attatchment.contentDic = value
-                } else {
-                    attatchment.contentDic = nil
+                    attatchment.contentDic = value!
                 }
                 if case let value as Data? = attatchmentDic["data"] {
                     attatchment.attatchmentData = value
@@ -105,7 +103,9 @@ class NetRequestManager: NSObject, XMLParserDelegate {
         }
     }
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        soapResults.append(string)
+        if recordResults {
+            soapResults.append(string)
+        }
     }
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         if elementName == "ns:return" {
@@ -144,7 +144,7 @@ class NetRequestManager: NSObject, XMLParserDelegate {
                         }
                         switch respTid {
                         case .LOGINRSQ:
-                            self.success?(rltDic!, respTid, requestId)
+                            self.success?(rltDic!, respTid, Int(requestId))
                         default:
                             var dic = [AnyHashable:Any]()
                             switch rltCode {
@@ -157,7 +157,7 @@ class NetRequestManager: NSObject, XMLParserDelegate {
                             default:
                                 break
                             }
-                            self.success?(dic, respTid, requestId)
+                            self.success?(dic, respTid, Int(requestId))
                         }
                     } else if array.count == 2 {
                         guard let textField = array[1] as? TextField else {
@@ -172,7 +172,7 @@ class NetRequestManager: NSObject, XMLParserDelegate {
                             print("Json data cannot be resolved")
                             return
                         }
-                        self.success?(rltDic!, respTid, requestId)
+                        self.success?(rltDic!, respTid, Int(requestId))
                     } else {
                         self.failure?(errorDesc1, respTid)
                     }

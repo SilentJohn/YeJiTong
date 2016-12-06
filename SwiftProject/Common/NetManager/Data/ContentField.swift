@@ -9,16 +9,10 @@
 import Foundation
 
 class ContentField: Field {
-    var contentDic: [AnyHashable:Any]? {
+    var contentDic: [AnyHashable:Any] = [:] {
         didSet {
             do {
-                var tempDic = [AnyHashable:Any]()
-                
-                for (key, value) in contentDic! {
-                    tempDic[key] = value
-                }
-                print("\(tempDic)")
-                contentData = try JSONSerialization.data(withJSONObject: contentDic!, options: .prettyPrinted)
+                contentData = try JSONSerialization.data(withJSONObject: contentDic, options: .prettyPrinted)
                 if contentData != nil {
                     contentDataLen = contentData!.count
                     fieldContentLength = UInt32(getFieldLength())
@@ -32,7 +26,7 @@ class ContentField: Field {
     private var contentDataLen: Int = 0
     
     func getFieldLength() -> Int {
-        return MemoryLayout.size(ofValue: Int32.self) + contentDataLen
+        return MemoryLayout<Int32>.size + contentDataLen
     }
     
     override func serialize(serializedData: inout Data) {

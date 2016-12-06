@@ -19,7 +19,7 @@ class Field {
     var fieldContentLength: UInt32
     
     class func getFieldHeaderLength() -> Int {
-        return MemoryLayout.size(ofValue: UInt16.self) + MemoryLayout.size(ofValue: UInt32.self)
+        return MemoryLayout<UInt16>.size + MemoryLayout<UInt32>.size
     }
     
     init(fieldID: UInt16) {
@@ -37,9 +37,9 @@ class Field {
             NSLog("Invalid field")
             return false
         }
-        let fieldID: UInt16 = UInt16(Utility.int(fromData: fromData, start: start, length: MemoryLayout.size(ofValue: UInt16.self)))
-        let fieldLen: UInt32 = UInt32(Utility.int(fromData: fromData, start: start.advanced(by: MemoryLayout.size(ofValue: UInt16.self)), length: MemoryLayout.size(ofValue: UInt32.self)))
-        guard start + Field.getFieldHeaderLength() + Int(fieldID) >= end  else {
+        let fieldID: UInt16 = UInt16(Utility.int(fromData: fromData, start: start, length: MemoryLayout<UInt16>.size))
+        let fieldLen: UInt32 = UInt32(Utility.int(fromData: fromData, start: start.advanced(by: MemoryLayout<UInt16>.size), length: MemoryLayout<UInt32>.size))
+        guard start + Field.getFieldHeaderLength() + Int(fieldLen) >= end  else {
             NSLog("Field content too short")
             return false
         }
@@ -56,20 +56,24 @@ class FieldParser {
     }
     
     func parseField(fromData: Data, start: Data.Index, end: Data.Index) -> Field? {
-        guard start.distance(to: end) < MemoryLayout.size(ofValue: UInt16.self) else {
+        guard start.distance(to: end) >= MemoryLayout<UInt16>.size else {
             NSLog("Cannot parse field ID")
             return nil
         }
-        var fd: Field?
         
         if let fieldID = FID(rawValue: Int16(Utility.int(fromData: fromData, start: start, length: 2))) {
             switch fieldID {
             case .TEXTFIELD:
-                fd = TextField(fieldID: UInt16(fieldID.rawValue))
+                let fd = TextField(fieldID: UInt16(fieldID.rawValue))
+                _ = fd.deserialize(fromData: fromData, start: start, end: end)
+                return fd
             case .FILEFIELD:
-                fd = FileField(fieldID: UInt16(fieldID.rawValue))
+                let fd = FileField(fieldID: UInt16(fieldID.rawValue))
+                _ = fd.deserialize(fromData: fromData, start: start, end: end)
+                return fd
             }
+        } else {
+            return nil
         }
-        return fd
     }
 }

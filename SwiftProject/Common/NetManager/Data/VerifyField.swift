@@ -8,12 +8,11 @@
 
 import Foundation
 
-let kValidationCode = "ValidationCode"
 let kNodeId = "kNode_id"
 
 class VerifyField: Field {
     
-    private var contentDic: [AnyHashable:Any]? {
+    private var contentDic: [AnyHashable:Any] = [:] {
         didSet {
             do {
                 contentData = try JSONSerialization.data(withJSONObject: contentDic, options: .prettyPrinted)
@@ -33,7 +32,7 @@ class VerifyField: Field {
         super.init(fieldID: fieldID)
         var dic: [AnyHashable:Any] = [AnyHashable:Any]()
         dic["app_version"] = appVersion
-        dic["validation_code"] = SQLiteOperation.getMyData(key: kValidationCode)
+        dic["validation_code"] = SQLiteOperation.getMyData(key: validationCodeKey)
         dic["devide_type"] = "2"
         dic["node_id"] = SQLiteOperation.getMyData(key: kNodeId)
         contentDic = dic
@@ -44,7 +43,7 @@ class VerifyField: Field {
     }
     
     func getFieldLength() -> Int {
-        return MemoryLayout.size(ofValue: Int32.self) + contentDataLen
+        return MemoryLayout<Int32>.size + contentDataLen
     }
     
     override func serialize(serializedData: inout Data) {

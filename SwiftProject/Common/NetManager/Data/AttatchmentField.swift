@@ -9,7 +9,7 @@
 import Foundation
 
 class AttatchmentField: Field {
-    var contentDic: [AnyHashable:Any]? {
+    var contentDic: [AnyHashable:Any] = [:] {
         didSet {
             do {
                 contentData = try JSONSerialization.data(withJSONObject: contentDic, options: .prettyPrinted)
@@ -45,7 +45,7 @@ class AttatchmentField: Field {
     private var attatchmentDataLen: Int = 0
     
     func getFieldLength() -> Int {
-        return 2 * MemoryLayout.size(ofValue: Int32.self) + contentDataLen + attatchmentDataLen
+        return 2 * MemoryLayout<Int32>.size + contentDataLen + attatchmentDataLen
     }
     
     override func serialize(serializedData: inout Data) {

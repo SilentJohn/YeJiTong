@@ -42,13 +42,13 @@ class TextField: Field {
         }
         let fieldHeaderLen = Field.getFieldHeaderLength()
         var curIndex = start.advanced(by: fieldHeaderLen)
-        guard curIndex.advanced(by: MemoryLayout.size(ofValue: UInt32.self)) <= end else {
+        guard curIndex.advanced(by: MemoryLayout<UInt32>.size) <= end else {
             NSLog("Cannot figure out text field json length")
             return false
         }
-        jsonLen = Utility.int(fromData: fromData, start: curIndex, length: MemoryLayout.size(ofValue: UInt32.self))
-        curIndex = curIndex.advanced(by: MemoryLayout.size(ofValue: UInt32.self))
-        guard curIndex.advanced(by: MemoryLayout.size(ofValue: UInt32.self)) <= end else {
+        jsonLen = Utility.int(fromData: fromData, start: curIndex, length: MemoryLayout<UInt32>.size)
+        curIndex = curIndex.advanced(by: MemoryLayout<UInt32>.size)
+        guard curIndex.advanced(by: MemoryLayout<UInt32>.size) <= end else {
             NSLog("json too short")
             return false
         }

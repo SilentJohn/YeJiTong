@@ -62,8 +62,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
             }
             return false
         } else if textField == txtPassword {
+            textField.resignFirstResponder()
             btnLogin(Optional.none)
-            return textField.resignFirstResponder()
+            return true
         }
         return false
     }
@@ -103,7 +104,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         }
         MBProgressHUD.showAdded(to: view, animated: true)
         let deviceAndiOSVersion = "\(UIDevice.current.deviceString()) + IOS\(iOSVersion)"
-        let loginDic = [userNameKey:userName, userPassKey:password, userDeviceKey:deviceAndiOSVersion, userForcedLoginKey:userForcedLogin, deviceTypeKey:"2", appVersionKey:appVersion]
+        let loginDic: [String:String] = [userNameKey:userName, userPassKey:password, userDeviceKey:deviceAndiOSVersion, userForcedLoginKey:userForcedLogin, deviceTypeKey:"2", appVersionKey:appVersion]
         NetRequestManager.shared.send(contentDic: loginDic, tid: .LOGINREQ, requestID: 4, success: { (dic, tid, requestId) in
             MBProgressHUD.hide(for: self.view, animated: true)
             guard let rltCode = dic["rlt_code"] as? Int else {
@@ -139,7 +140,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         }
     }
     
-    func didLogin(userInfo: [AnyHashable:Any]) {
+    // MARK: - The dictionary will be filled and saved into db
+    var info: [String:Any] = [:]
+    
+    private func didLogin(userInfo: [AnyHashable:Any]) {
+        // MARK: - Save some personal info into UserDefaults
+        UserDefaults.standard.set(txtUserName.text!, forKey: loginUserNameKey)
+        UserDefaults.standard.set(userInfo["node_id"], forKey: YJTUserNodeIdKey)
+        UserDefaults.standard.set(txtPassword.text!, forKey: YJTPasswordKey)
+        UserDefaults.standard.set(true, forKey: runWebServiceKey)
+        UserDefaults.standard.set(userInfo["node_push_code"], forKey: nodePushCodeKey)
+        
+        // MARK: - Save some personal info into db
+        info[lastLoginTimeKey] = getNowTime()
+        info[lastLogoutTimeKey] = ""
+        info[nodePushCodeKey] = userInfo["node_push_code"]
+        info[validationCodeKey] = userInfo["validation_code"]
+        info[birthdayKey] = userInfo["birthday"]
+//        info[]
+        
         UserDefaults.standard.set(true, forKey: loginStateKey)
         
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
