@@ -12,13 +12,16 @@ import FMDB
 class SQLiteOperation {
     
     static private var _dbQueue: FMDatabaseQueue? = nil
-    static var dbQueue: FMDatabaseQueue {
+    static var dbQueue: FMDatabaseQueue? {
         get {
             if _dbQueue == nil {
-                let path = NSString(string: ReadPath.getUserFile()).appendingPathComponent("yejitongDB.sqlite")
+                guard let userPath = ReadPath.getUserFile() else {
+                    return _dbQueue
+                }
+                let path = NSString(string: userPath).appendingPathComponent("yejitongDB.sqlite")
                 _dbQueue = FMDatabaseQueue(path: path)
             }
-            return _dbQueue!
+            return _dbQueue
         }
     }
     
@@ -33,7 +36,7 @@ class SQLiteOperation {
         keys = keys.substring(to: keys.index(before: keys.endIndex))
         values = values.substring(to: values.index(before: values.endIndex))
         let command = "INSERT INTO \(table)(\(keys) VALUES (\(values)))"
-        dbQueue.inDatabase { (db) in
+        dbQueue?.inDatabase { (db) in
             do {
                 try db?.executeUpdate(command, values: Array(keyValue.values))
             } catch {
@@ -48,7 +51,7 @@ class SQLiteOperation {
         if let strConstraint = constraint {
             command.append("WHERE \(strConstraint)")
         }
-        dbQueue.inDatabase { (db) in
+        dbQueue?.inDatabase { (db) in
             do {
                 if let set = try db?.executeQuery(command, values: nil) {
                     while set.next() {
@@ -67,7 +70,7 @@ class SQLiteOperation {
         if let strConstraint = constraint {
             command.append("WHERE \(strConstraint)")
         }
-        dbQueue.inDatabase { (db) in
+        dbQueue?.inDatabase { (db) in
             do {
                 try db?.executeUpdate(command, values: nil)
             } catch {
@@ -81,7 +84,7 @@ class SQLiteOperation {
         for (key, value) in keyValue {
             command.append("'\(key)'='\(value)'")
         }
-        dbQueue.inDatabase { (db) in
+        dbQueue?.inDatabase { (db) in
             do {
                 try db?.executeUpdate("UPDATE \(table) SET \(command) WHERE \(constraint)", values: nil)
             } catch {
@@ -101,5 +104,10 @@ class SQLiteOperation {
             return data[0][key] as! String?
         }
         return nil
+    }
+    
+    // MARK: - Initialize all tables needed
+    class func initAllTables() {
+        
     }
 }

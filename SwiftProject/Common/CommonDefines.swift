@@ -8,11 +8,6 @@
 
 import UIKit
 
-public enum LoginError: Error {
-    case UserNameNil
-    case PasswordNil
-}
-
 public enum TID: Int32 {
     case UNKNOWNREQRSP = 0x00000000
     case LOGINREQ
@@ -41,7 +36,49 @@ public let sexKey = "kSex"
 public let headImageURLKey = "kHeadImageURL"
 public let addressesKey = "kAddresses"
 public let nameKey = "kName"
-//public 
+public let ageKey = "kAge"
+public let telKey = "kTel"
+public let signatureKey = "kSignature"
+public let storeNameKey = "kStore_name"
+public let nodeTypeKey = "kNode_type"
+public let wechatUrlKey = "kWechat_url"
+public let nodeIdKey = "kNode_id"
+public let newHeadKey = "kNewHead"
+public let headLocalURLKey = "kHeadLocalURL"
+public let wechatLocalURLKey = "kWechatLocalURL"
+public let yejiMainRefreshKey = "kYeJiMainRefresh"
+public let trainingRefreshKey = "kTrainingRefresh"
+public let deliverTimeKey = "delivertime"
+public let messageIdKey = "messageId"
+public let pkSelectOneKey = "kPKSelectOne"
+public let pkSelectTwoKey = "kPKSelectTwo"
+public let noticeListRefreshKey = "kNoticeListRefresh"
+public let exhibitStandardRefreshTimeKey = "exhibitStandardRefreshTime"
+public let scriptListRefreshTimeKey = "kScriptListRefreshTime"
+public let shufflePicLastUpdateTimeKey = "last_update"
+public let activityListRefreshKey = "kActivityListRefresh"
+public let vistorListLoginCountKey = "vistorListLoginCount"
+public let collegueListLoginCountKey = "collegueListLoginCount"
+public let extra1Key = "extra1"
+public let extra2Key = "extra2"
+public let extra3Key = "extra3"
+public let extra4Key = "extra4"
+public let extra5Key = "extra5"
+public let extra6Key = "extra6"
+public let extra7Key = "extra7"
+public let extra8Key = "extra8"
+public let extra9Key = "extra9"
+public let extra10Key = "extra10"
+public let extra11Key = "extra11"
+public let extra12Key = "extra12"
+public let extra13Key = "extra13"
+public let extra14Key = "extra14"
+public let extra15Key = "extra15"
+public let extra16Key = "extra16"
+public let extra17Key = "extra17"
+public let extra18Key = "extra18"
+public let extra19Key = "extra19"
+public let extra20Key = "extra20"
 
 // MARK: - Common funtions
 func getNowTime() -> String {

@@ -8,6 +8,7 @@
 
 import UIKit
 import MBProgressHUD
+import FMDB
 
 // MARK: - Login dictionary keys
 let userNameKey = "user_name"
@@ -95,6 +96,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         }
     }
     
+    enum LoginError: Error {
+        case UserNameNil
+        case PasswordNil
+    }
+    
     private func checkLogin(userForcedLogin: String) throws {
         guard let userName = txtUserName.text, userName.characters.count > 0 else {
             throw LoginError.UserNameNil
@@ -157,19 +163,85 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         info[nodePushCodeKey] = userInfo["node_push_code"]
         info[validationCodeKey] = userInfo["validation_code"]
         info[birthdayKey] = userInfo["birthday"]
-//        info[]
+        info[sexKey] = userInfo["gender"]
+        info[headImageURLKey] = userInfo["head_path"]
+        info[addressesKey] = userInfo["node_address"]
+        info[nameKey] = userInfo["node_person"]
+        info[ageKey] = ""
+        info[telKey] = userInfo["node_tel"]
+        info[signatureKey] = userInfo["signature"]
+        info[storeNameKey] = userInfo["store_name"]
+        info[nodeTypeKey] = userInfo["node_type"]
+        info[wechatUrlKey] = userInfo["wechat_url"]
+        info[nodeIdKey] = userInfo["node_id"]
+        info[newHeadKey] = "1"
+        info[headLocalURLKey] = ""
+        info[wechatLocalURLKey] = ""
+        info[yejiMainRefreshKey] = ""
+        info[trainingRefreshKey] = ""
+        info[deliverTimeKey] = getNowTime()
+        info[messageIdKey] = "0"
+        info[pkSelectOneKey] = "0"
+        info[pkSelectTwoKey] = "0"
+        let farPastTime = "1990-01-01 01:00:00"
+        info[noticeListRefreshKey] = farPastTime
+        info[exhibitStandardRefreshTimeKey] = farPastTime
+        info[scriptListRefreshTimeKey] = farPastTime
+        info[activityListRefreshKey] = farPastTime
+        info[vistorListLoginCountKey] = "0"
+        info[collegueListLoginCountKey] = "0"
+        info[extra1Key] = "0"
+        info[extra2Key] = "0"
+        info[extra3Key] = "1"
+        info[extra4Key] = "1900-1-1"
+        info[extra5Key] = "0"
+        info[extra6Key] = "0"
+        info[extra7Key] = "0"
+        info[extra8Key] = "0"
+        info[extra9Key] = userInfo["parent_id"]
+        info[extra10Key] = "0"
+        info[extra11Key] = "0"
+        info[extra12Key] = "0"
+        info[extra13Key] = "0"
+        info[extra14Key] = "0"
+        info[extra15Key] = "0"
+        info[extra16Key] = "0"
+        info[extra17Key] = "0"
+        info[extra18Key] = "0"
+        info[extra19Key] = "0"
+        info[extra20Key] = "0"
         
+        UserDefaults.standard.set("", forKey: nodePushStateKey)
+        
+        if let nodeId = userInfo["node_id"] as? String {
+            do {
+                try ReadPath.createFilePath(nodeId)
+            } catch {
+                if let createError = error as? CreateFilePathError {
+                    print(createError.localizedDescription)
+                }
+            }
+        }
+        
+        SQLiteOperation.initAllTables()
+        MBProgressHUD.hide(for: view, animated: true)
         UserDefaults.standard.set(true, forKey: loginStateKey)
         
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let mainTabController = storyBoard.instantiateViewController(withIdentifier: "main") as! MainTabViewController
         parent?.addChildViewController(mainTabController)
         parent?.transition(from: self
-            , to: mainTabController, duration: 1.5, options: .transitionFlipFromRight, animations: {
+            , to: mainTabController, duration: 0.5, options: .transitionFlipFromRight, animations: {
                 
-            }, completion: { (finished) in
+            }) { (finished) in
                 
-        })
+        }
+    }
+    
+    private func createTable() {
+        SQLiteOperation.dbQueue?.inDatabase() { (db) in
+           let command = "CREATE TABLE IF NOT EXISTS MYDATA (%@ INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT, %@ TEXT, %@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT,%@ TEXT)"
+        }
     }
 }
 
