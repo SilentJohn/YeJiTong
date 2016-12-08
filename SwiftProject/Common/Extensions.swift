@@ -98,3 +98,11 @@ extension UIDevice {
         }
     }
 }
+
+extension Date {
+    static func getNowTime() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return formatter.string(from: Date())
+    }
+}
