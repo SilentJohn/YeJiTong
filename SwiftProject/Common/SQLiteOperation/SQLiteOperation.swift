@@ -35,7 +35,7 @@ class SQLiteOperation {
         }
         keys = keys.substring(to: keys.index(before: keys.endIndex))
         values = values.substring(to: values.index(before: values.endIndex))
-        let command = "INSERT INTO \(table)(\(keys) VALUES (\(values)))"
+        let command = "INSERT INTO \(table)(\(keys)) VALUES (\(values))"
         dbQueue?.inDatabase { (db) in
             do {
                 try db?.executeUpdate(command, values: Array(keyValue.values))
@@ -49,17 +49,17 @@ class SQLiteOperation {
         var resultArray = [[AnyHashable:Any]]()
         var command = "SELECT * FROM \(table)"
         if let strConstraint = constraint {
-            command.append("WHERE \(strConstraint)")
+            command.append(" WHERE \(strConstraint)")
         }
         dbQueue?.inDatabase { (db) in
             do {
-                if let set = try db?.executeQuery(command, values: nil) {
+                if let set = try db?.executeQuery(command, values: []) {
                     while set.next() {
                         resultArray.append(set.resultDictionary())
                     }
                 }
             } catch {
-                print("SQLite update error = \(error)")
+                print("SQLite query error = \(error)")
             }
         }
         return resultArray
@@ -72,7 +72,7 @@ class SQLiteOperation {
         }
         dbQueue?.inDatabase { (db) in
             do {
-                try db?.executeUpdate(command, values: nil)
+                try db?.executeUpdate(command, values: [])
             } catch {
                 print("SQLite delete error = \(error)")
             }
@@ -86,7 +86,7 @@ class SQLiteOperation {
         }
         dbQueue?.inDatabase { (db) in
             do {
-                try db?.executeUpdate("UPDATE \(table) SET \(command) WHERE \(constraint)", values: nil)
+                try db?.executeUpdate("UPDATE \(table) SET \(command) WHERE \(constraint)", values: [])
             } catch {
                 print("SQLite modify error = \(error)")
             }
@@ -101,7 +101,7 @@ class SQLiteOperation {
     class func getMyData(key: String) -> String? {
         let data = SQLiteOperation.selectFrom(table: "MYDATA")
         if data.count > 0 {
-            return data[0][key] as! String?
+            return data[0][key] as? String
         }
         return nil
     }
@@ -109,5 +109,10 @@ class SQLiteOperation {
     // MARK: - Initialize all tables needed
     class func initAllTables() {
         
+    }
+    
+    // MARK: - Check the existence of the value of a certain key
+    class func isValue(_ value: String, existedForKey key: String, inTable table:String) -> Bool {
+        return SQLiteOperation.selectFrom(table: table, where: "\(key)='\(value)'").count > 0
     }
 }

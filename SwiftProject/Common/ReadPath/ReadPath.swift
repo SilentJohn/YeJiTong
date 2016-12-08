@@ -6,17 +6,14 @@
 //  Copyright © 2016年 IOS. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum CreateFilePathError: Error {
-    case Succeeded
     case Failed
     case Existed
     
     var localizedDescription: String {
         switch self {
-        case .Succeeded:
-            return "创建目录成功"
         case .Failed:
             return "创建目录失败"
         case .Existed:
@@ -71,6 +68,15 @@ class ReadPath {
                 throw CreateFilePathError.Failed
             }
         }
-        throw CreateFilePathError.Succeeded
+    }
+    
+    class func save(image: UIImage, withName name: String, toPath path: String) -> String {
+        let imagePath = (path as NSString).appendingPathComponent("\(name).png")
+        do {
+            try UIImagePNGRepresentation(image)?.write(to: URL.init(fileURLWithPath: imagePath), options: .atomic)
+        } catch {
+            print("\(error.localizedDescription)")
+        }
+        return imagePath
     }
 }

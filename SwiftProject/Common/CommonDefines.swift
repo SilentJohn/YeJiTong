@@ -81,8 +81,3 @@ public let extra19Key = "extra19"
 public let extra20Key = "extra20"
 
 // MARK: - Common funtions
-func getNowTime() -> String {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-    return formatter.string(from: Date())
-}
