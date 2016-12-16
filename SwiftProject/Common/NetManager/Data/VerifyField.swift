@@ -12,7 +12,7 @@ let kNodeId = "kNode_id"
 
 class VerifyField: Field {
     
-    private var contentDic: [AnyHashable:Any] = [:] {
+    var contentDic: [AnyHashable:Any] = [:] {
         didSet {
             do {
                 contentData = try JSONSerialization.data(withJSONObject: contentDic, options: .prettyPrinted)
@@ -27,20 +27,6 @@ class VerifyField: Field {
     }
     private var contentData: Data?
     private var contentDataLen: Int = 0
-    
-    required override init(fieldID: UInt16) {
-        super.init(fieldID: fieldID)
-        var dic: [AnyHashable:Any] = [AnyHashable:Any]()
-        dic["app_version"] = appVersion
-        dic["validation_code"] = SQLiteOperation.getMyData(key: validationCodeKey)
-        dic["devide_type"] = "2"
-        dic["node_id"] = SQLiteOperation.getMyData(key: kNodeId)
-        contentDic = dic
-    }
-    
-    static func field() -> Self {
-        return self.init(fieldID: 0x0005)
-    }
     
     func getFieldLength() -> Int {
         return MemoryLayout<Int32>.size + contentDataLen

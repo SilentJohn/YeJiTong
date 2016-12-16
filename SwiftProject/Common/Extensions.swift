@@ -10,7 +10,8 @@ import Foundation
 import MBProgressHUD
 
 extension MBProgressHUD {
-    class func show(messages: String, view: UIView?) {
+    @discardableResult
+    class func show(messages: String, view: UIView?) -> MBProgressHUD {
         let backView = view == nil ? UIApplication.shared.keyWindow! : view!
         let hud = MBProgressHUD.showAdded(to: backView, animated: true)
         hud.bezelView.color = UIColor.black
@@ -20,9 +21,11 @@ extension MBProgressHUD {
         hud.mode = .text
         hud.removeFromSuperViewOnHide = true
         hud.hide(animated: true, afterDelay: 1.5)
+        return hud
     }
     
-    class func show(error: String, view: UIView?) {
+    @discardableResult
+    class func show(error: String, view: UIView?) -> MBProgressHUD {
         let backView = view == nil ? UIApplication.shared.keyWindow! : view!
         let hud = MBProgressHUD.showAdded(to: backView, animated: true)
         hud.bezelView.color = UIColor.black
@@ -33,6 +36,7 @@ extension MBProgressHUD {
         hud.customView = UIImageView(image: UIImage(named: "error"))
         hud.removeFromSuperViewOnHide = true
         hud.hide(animated: true, afterDelay: 1.5)
+        return hud
     }
 }
 

@@ -102,6 +102,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
     }
     
     private func checkLogin(userForcedLogin: String) throws {
+        self.view.endEditing(true)
         guard let userName = txtUserName.text, userName.characters.count > 0 else {
             throw LoginError.UserNameNil
         }
@@ -111,7 +112,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         MBProgressHUD.showAdded(to: view, animated: true)
         let deviceAndiOSVersion = "\(UIDevice.current.deviceString()) + IOS\(iOSVersion)"
         let loginDic: [String:String] = [userNameKey:userName, userPassKey:password, userDeviceKey:deviceAndiOSVersion, userForcedLoginKey:userForcedLogin, deviceTypeKey:"2", appVersionKey:appVersion]
-        NetRequestManager.shared.send(contentDic: loginDic, tid: .LOGINREQ, requestID: 4, success: { (dic, tid, requestId) in
+        NetRequestManager().send(contentDic: loginDic, tid: .LOGINREQ, requestID: 4, success: { (dic, tid, requestId) in
             MBProgressHUD.hide(for: self.view, animated: true)
             guard let rltCode = dic["rlt_code"] as? Int else {
                 print("Invalid result code")
@@ -132,7 +133,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
                     
                 })
                 let forcedLogin = UIAlertAction(title: "强制登录", style: .destructive, handler: { (action) in
-                    try! self.checkLogin(userForcedLogin: "1")
+                    do {
+                        try self.checkLogin(userForcedLogin:"1")
+                    } catch LoginError.UserNameNil {
+                        NSLog("UserName is nil")
+                        MBProgressHUD.show(error: "请输入用户名", view: self.view)
+                    } catch LoginError.PasswordNil {
+                        NSLog("Password is nil")
+                        MBProgressHUD.show(error: "请输入密码", view: self.view)
+                    } catch {
+                        
+                    }
                 })
                 alert.addAction(cancel)
                 alert.addAction(forcedLogin)
@@ -227,6 +238,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         createTable()
         MBProgressHUD.hide(for: view, animated: true)
         UserDefaults.standard.set(true, forKey: loginStateKey)
+        UserDefaults.standard.synchronize()
         
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let mainTabController = storyBoard.instantiateViewController(withIdentifier: "main") as! MainTabViewController

@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import SystemConfiguration
 
 public enum TID: Int32 {
     case UNKNOWNREQRSP = 0x00000000
     case LOGINREQ
     case LOGINRSQ
+    case LOGOUTREQ
+    case LOGOUTRSP
 }
 
 public let iOSVersion = UIDevice.current.systemVersion
@@ -81,3 +84,27 @@ public let extra19Key = "extra19"
 public let extra20Key = "extra20"
 
 // MARK: - Common funtions
+
+public func connetedToNetwork() -> Bool {
+    var zeroAddress = sockaddr_in()
+    zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+    zeroAddress.sin_family = sa_family_t(AF_INET)
+    
+    guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
+        $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+            SCNetworkReachabilityCreateWithAddress(nil, $0)
+        }
+    }) else {
+        return false
+    }
+    
+    var flags: SCNetworkReachabilityFlags = []
+    if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
+        return false
+    }
+    
+    let isReachable = flags.contains(.reachable)
+    let needsConnection = flags.contains(.connectionRequired)
+    
+    return (isReachable && !needsConnection)
+}

@@ -55,14 +55,13 @@ class MessageTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell", for: indexPath) as? MessageTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell", for: indexPath) as! MessageTableViewCell
         if searchController.isActive {
-            cell?.messageModel = filteredData[indexPath.row]
+            cell.messageModel = filteredData[indexPath.row]
         } else {
-            cell?.messageModel = dataSource[indexPath.row]
+            cell.messageModel = dataSource[indexPath.row]
         }
-        
-        return cell!
+        return cell
     }
 
     @IBAction func segmentControlAction(_ sender: UISegmentedControl) {

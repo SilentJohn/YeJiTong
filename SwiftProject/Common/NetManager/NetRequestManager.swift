@@ -18,11 +18,6 @@ let errorDesc1 = "网络异常，请稍后重试"
 
 class NetRequestManager: NSObject, XMLParserDelegate {
     
-    static let shared = NetRequestManager()
-    private override init() {
-        
-    }
-    
     lazy var soapResults: String = { String() }()
     var recordResults: Bool = false
     
@@ -71,17 +66,27 @@ class NetRequestManager: NSObject, XMLParserDelegate {
     private func contrustPackageData(contentDic: [AnyHashable:Any]? = nil, attatchmentArray: [[AnyHashable:Any]]? = nil, tid: TID, requestID: Int) -> Package? {
         let package = Package(tid: tid, requestID: Int32(requestID))
         if tid != .LOGINREQ {
-            let verify = VerifyField.field()
+            let verify = VerifyField(fieldID: UInt16(FID.TEXTFIELD.rawValue))
+            guard let validationCode = SQLiteOperation.getMyData(key: validationCodeKey) else {
+                print("No validation code")
+                return nil
+            }
+            guard let nodeId = SQLiteOperation.getMyData(key: kNodeId) else {
+                print("No node id")
+                return nil
+            }
+            let dic: [String:String] = ["app_version":appVersion, "validation_code":validationCode, "device_type":"2", "node_id":nodeId]
+            verify.contentDic = dic
             package.addField(verify)
         }
         if let tempContenDic = contentDic {
-            let contentField = ContentField(fieldID: 0x0005)
+            let contentField = ContentField(fieldID: UInt16(FID.TEXTFIELD.rawValue))
             contentField.contentDic = tempContenDic
             package.addField(contentField)
         }
         if let tempAttatchmentArray = attatchmentArray {
             for attatchmentDic in tempAttatchmentArray {
-                let attatchment = AttatchmentField(fieldID: 0x0006)
+                let attatchment = AttatchmentField(fieldID: UInt16(FID.FILEFIELD.rawValue))
                 if case let value as [AnyHashable:Any]? = attatchmentDic["contentDic"] {
                     attatchment.contentDic = value!
                 }
@@ -96,7 +101,7 @@ class NetRequestManager: NSObject, XMLParserDelegate {
         return package
     }
     
-    /// MARK: XML parser delegate
+    // MARK: - XML parser delegate
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         if elementName == "ns:return" {
             recordResults = true
@@ -124,42 +129,45 @@ class NetRequestManager: NSObject, XMLParserDelegate {
                 OperationQueue.main.addOperation {
                     let array = rcvPackage.fields
                     let respTid = rcvPackage.header.tid
+                    guard array.count > 0 else {
+                        self.failure?(errorDesc1, respTid)
+                        return
+                    }
                     let requestId = rcvPackage.header.requestID
-                    if array.count == 1 {
-                        guard let textField = array[0] as? TextField else {
-                            print("Invalid text field")
-                            return
-                        }
-                        guard let data = textField.json?.data(using: .utf8) else {
-                            print("No json data")
-                            return
-                        }
-                        guard let rltDic = try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? [AnyHashable:Any] else {
-                            print("Json data cannot be resolved")
-                            return
-                        }
-                        guard let rltCode = rltDic?["rlt_code"] as? Int else {
-                            print("Invalid result code")
-                            return
-                        }
-                        switch respTid {
-                        case .LOGINRSQ:
-                            self.success?(rltDic!, respTid, Int(requestId))
+                    guard let textField = array[0] as? TextField else {
+                        print("Invalid text field")
+                        return
+                    }
+                    guard let data = textField.json?.data(using: .utf8) else {
+                        print("No json data")
+                        return
+                    }
+                    guard let rltDic = try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? [AnyHashable:Any] else {
+                        print("Json data cannot be resolved")
+                        return
+                    }
+                    guard let rltCode = rltDic?["rlt_code"] as? Int else {
+                        print("Invalid result code")
+                        return
+                    }
+                    switch respTid {
+                    case .LOGINRSQ:
+                        self.success?(rltDic!, respTid, Int(requestId))
+                    default:
+                        var dic = [AnyHashable:Any]()
+                        switch rltCode {
+                        case 0:
+                            dic["rlt_code"] = -1
+                        case 1:
+                            dic["rlt_code"] = -2
+                        case 2:
+                            dic["rlt_code"] = -3
                         default:
-                            var dic = [AnyHashable:Any]()
-                            switch rltCode {
-                            case 0:
-                                dic["rlt_code"] = -1
-                            case 1:
-                                dic["rlt_code"] = -2
-                            case 2:
-                                dic["rlt_code"] = -3
-                            default:
-                                break
-                            }
-                            self.success?(dic, respTid, Int(requestId))
+                            break
                         }
-                    } else if array.count == 2 {
+                        self.success?(dic, respTid, Int(requestId))
+                    }
+                    if array.count == 2 {
                         guard let textField = array[1] as? TextField else {
                             print("Invalid text field")
                             return
@@ -173,8 +181,6 @@ class NetRequestManager: NSObject, XMLParserDelegate {
                             return
                         }
                         self.success?(rltDic!, respTid, Int(requestId))
-                    } else {
-                        self.failure?(errorDesc1, respTid)
                     }
                 }
             }

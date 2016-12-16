@@ -43,37 +43,46 @@ class SettingTableViewController: UITableViewController {
     
     
     func logOut() {
-        MBProgressHUD.show(messages: "注销成功", view: UIApplication.shared.keyWindow)
-        repeat {
-            UserDefaults.standard.set(false, forKey: loginStateKey)
-        } while UserDefaults.standard.synchronize() == false
-        var rootViewController = self.parent
-        while rootViewController as? RootViewController == nil {
-            rootViewController = rootViewController?.parent
-        }
-        var loginViewController: UIViewController?
-        var currentNavigationController: UIViewController?
-        if (rootViewController?.childViewControllers.count)! > 1 {
-            for viewController in (rootViewController?.childViewControllers)! {
-                if viewController.isKind(of: LoginViewController.self) {
-                    loginViewController = viewController
-                } else if viewController.isKind(of: MainTabViewController.self) {
-                    currentNavigationController = viewController
-                }
+        let alertExit = UIAlertController(title: "确认退出", message: "退出后不会删除任何历史数据，下次登录依然可以使用本账号。", preferredStyle: .actionSheet)
+        alertExit.addAction(UIAlertAction(title: "取消", style: .cancel) { action in
+            
+        })
+        alertExit.addAction(UIAlertAction(title: "确定", style: .destructive) { action in
+            if connetedToNetwork() {
+                MBProgressHUD.showAdded(to: self.view, animated: true)
+                NetRequestManager().send(tid: .LOGOUTREQ, requestID: 2, success: { (dic, tid, requestId) in
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    guard let rltCode = dic["rlt_code"] as? Int else {
+                        print("Invalid result code")
+                        return
+                    }
+                    if rltCode == 1 {
+                        UserDefaults.standard.set("", forKey: nodePushStateKey)
+                        UserDefaults.standard.set(false, forKey: runWebServiceKey)
+                        UserDefaults.standard.set(false, forKey: loginStateKey)
+                        SQLiteOperation .saveMyData(dic: [lastLogoutTimeKey:Date.getNowTime()])
+                        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                        guard let loginViewController = storyBoard.instantiateViewController(withIdentifier: "login") as? LoginViewController else {
+                            print("Check if LoginViewController exists in Main.storyboard")
+                            return
+                        }
+                        self.parent?.parent?.parent?.addChildViewController(loginViewController)
+                        self.parent?.parent?.parent?.transition(from: self.parent!.parent!
+                            , to: loginViewController, duration: 0.5, options: .transitionFlipFromRight, animations: {
+                                
+                        }) { (finished) in
+                            MBProgressHUD.show(messages: "注销成功", view: UIApplication.shared.keyWindow)
+                        }
+                    } else {
+                        MBProgressHUD.show(error: "注销失败", view: self.view)
+                    }
+                    }, failure: { (error, tid) in
+                        print("\(error)")
+                        MBProgressHUD.hide(for: self.view, animated: true)
+                        MBProgressHUD.show(error: error, view: self.view)
+                })
             }
-        } else {
-            currentNavigationController = (rootViewController?.childViewControllers[0])!
-            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-            loginViewController = storyBoard.instantiateViewController(withIdentifier: "login") as! LoginViewController
-            rootViewController?.addChildViewController(loginViewController!)
-        }
-        if currentNavigationController != nil && loginViewController != nil {
-            rootViewController?.transition(from: currentNavigationController!
-                , to: loginViewController!, duration: 1.5, options: .transitionFlipFromRight, animations: {
-                    
-                }, completion: { (finished) in
-                    
-            })
-        }
+        })
+        self .present(alertExit, animated: true)
     }
 }
