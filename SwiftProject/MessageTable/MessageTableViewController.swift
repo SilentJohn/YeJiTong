@@ -24,15 +24,39 @@ class MessageTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpViews()
+        requestForData()
+    }
+    
+    private func setUpViews() {
+        if let imagePath = SQLiteOperation.getMyData(key: headLocalURLKey) {
+            if let image = UIImage(contentsOfFile: imagePath) {
+                btnHeadIcon.setImage(image, for: .normal);
+            } else {
+                btnHeadIcon.setImage(#imageLiteral(resourceName: "personIconDefault.png"), for: .normal);
+            }
+        }
+        
         segGuestOrFellow.clipsToBounds = true
         segGuestOrFellow.layer.cornerRadius = 14
         segGuestOrFellow.layer.borderWidth = 1
         segGuestOrFellow.layer.borderColor = UIColor.white.cgColor
+        
         dataSource.append(MessageModel(dic: ["headImageUrl":"com.apple/somepic.png", "senderTitle":"江湧", "sendTime":"2016-10-27 18:40", "messageContent":"呲牙"]))
         tableView.tableFooterView = UIView()
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         tableView.tableHeaderView = searchController.searchBar
+    }
+    
+    private func requestForData() {
+//        let contentDic: [AnyHashable:Any] = ["last_update_time":];
+        
+//        NetRequestManager().send(contentDic: <#T##[AnyHashable : Any]?#>, tid: <#T##TID#>, requestID: <#T##Int#>, success: <#T##(([AnyHashable : Any], TID, Int) -> Void)##(([AnyHashable : Any], TID, Int) -> Void)##([AnyHashable : Any], TID, Int) -> Void#>, failure: <#T##((String, TID) -> Void)##((String, TID) -> Void)##(String, TID) -> Void#>)
+    }
+    
+    @IBAction func headImageAction(_ sender: UIButton) {
+        
     }
 
     override func didReceiveMemoryWarning() {

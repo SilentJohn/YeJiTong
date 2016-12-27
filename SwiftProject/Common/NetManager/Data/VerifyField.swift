@@ -8,8 +8,6 @@
 
 import Foundation
 
-let kNodeId = "kNode_id"
-
 class VerifyField: Field {
     
     var contentDic: [AnyHashable:Any] = [:] {

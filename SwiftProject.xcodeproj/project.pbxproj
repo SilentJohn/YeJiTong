@@ -21,7 +21,7 @@
 		811A1BC41DC866BF0078C44C /* exitapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 811A1BC31DC866BF0078C44C /* exitapp@2x.png */; };
 		811A1BC71DC872390078C44C /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A1BC61DC872390078C44C /* SettingTableViewController.swift */; };
 		812195101DD2EDC50071FAB5 /* MessageOtherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8121950F1DD2EDC50071FAB5 /* MessageOtherCell.swift */; };
-		812195131DD2F0AD0071FAB5 /* Defines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812195121DD2F0AD0071FAB5 /* Defines.swift */; };
+		812195131DD2F0AD0071FAB5 /* MessageDefines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812195121DD2F0AD0071FAB5 /* MessageDefines.swift */; };
 		81310E071DE58CCD005B704A /* FileField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81310E061DE58CCC005B704A /* FileField.swift */; };
 		814A3E611DBF2EFC007CF48D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814A3E601DBF2EFC007CF48D /* RootViewController.swift */; };
 		814A3E661DBF353F007CF48D /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814A3E651DBF353F007CF48D /* MainTabViewController.swift */; };
@@ -59,6 +59,8 @@
 		81713CCC1DBE198100EDAEEF /* success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 81713CCA1DBE198100EDAEEF /* success@2x.png */; };
 		8181963C1DD567BA00C6A71D /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8181963B1DD567BA00C6A71D /* Utility.swift */; };
 		8181963E1DD5682900C6A71D /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8181963D1DD5682900C6A71D /* Field.swift */; };
+		8184CB6C1E0D08760061A254 /* LoginDefines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8184CB6B1E0D08760061A254 /* LoginDefines.swift */; };
+		8184CB6F1E0D0A430061A254 /* MessageDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8184CB6E1E0D0A430061A254 /* MessageDataManager.swift */; };
 		818577551DE6F56E001462FD /* VerifyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818577541DE6F56E001462FD /* VerifyField.swift */; };
 		81AF488F1DD9AA86001E7EAA /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AF488E1DD9AA86001E7EAA /* Package.swift */; };
 		81AF48911DDAAE6F001E7EAA /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AF48901DDAAE6F001E7EAA /* TextField.swift */; };
@@ -96,7 +98,7 @@
 		811A1BC31DC866BF0078C44C /* exitapp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exitapp@2x.png"; sourceTree = "<group>"; };
 		811A1BC61DC872390078C44C /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		8121950F1DD2EDC50071FAB5 /* MessageOtherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageOtherCell.swift; sourceTree = "<group>"; };
-		812195121DD2F0AD0071FAB5 /* Defines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defines.swift; sourceTree = "<group>"; };
+		812195121DD2F0AD0071FAB5 /* MessageDefines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDefines.swift; sourceTree = "<group>"; };
 		81310E061DE58CCC005B704A /* FileField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileField.swift; sourceTree = "<group>"; };
 		814A3E601DBF2EFC007CF48D /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		814A3E651DBF353F007CF48D /* MainTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
@@ -141,6 +143,8 @@
 		81713CCA1DBE198100EDAEEF /* success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success@2x.png"; sourceTree = "<group>"; };
 		8181963B1DD567BA00C6A71D /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		8181963D1DD5682900C6A71D /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
+		8184CB6B1E0D08760061A254 /* LoginDefines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginDefines.swift; sourceTree = "<group>"; };
+		8184CB6E1E0D0A430061A254 /* MessageDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDataManager.swift; sourceTree = "<group>"; };
 		818577541DE6F56E001462FD /* VerifyField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyField.swift; sourceTree = "<group>"; };
 		81AF488E1DD9AA86001E7EAA /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		81AF48901DDAAE6F001E7EAA /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
@@ -209,7 +213,7 @@
 		812195111DD2F04D0071FAB5 /* Defines */ = {
 			isa = PBXGroup;
 			children = (
-				812195121DD2F0AD0071FAB5 /* Defines.swift */,
+				812195121DD2F0AD0071FAB5 /* MessageDefines.swift */,
 			);
 			path = Defines;
 			sourceTree = "<group>";
@@ -263,6 +267,7 @@
 				814A3E831DC20C32007CF48D /* Model */,
 				814A3E801DC20A72007CF48D /* View */,
 				812195111DD2F04D0071FAB5 /* Defines */,
+				8184CB6D1E0D09FF0061A254 /* Tool */,
 			);
 			path = MessageTable;
 			sourceTree = "<group>";
@@ -356,6 +361,7 @@
 				814A3E601DBF2EFC007CF48D /* RootViewController.swift */,
 				81713CB41DB8AA4200EDAEEF /* LoginViewController.swift */,
 				81713CBA1DB8B14800EDAEEF /* View */,
+				8184CB6A1E0D08390061A254 /* Defines */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -429,6 +435,22 @@
 			isa = PBXGroup;
 			children = (
 				8181963B1DD567BA00C6A71D /* Utility.swift */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
+		8184CB6A1E0D08390061A254 /* Defines */ = {
+			isa = PBXGroup;
+			children = (
+				8184CB6B1E0D08760061A254 /* LoginDefines.swift */,
+			);
+			path = Defines;
+			sourceTree = "<group>";
+		};
+		8184CB6D1E0D09FF0061A254 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				8184CB6E1E0D0A430061A254 /* MessageDataManager.swift */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -781,17 +803,19 @@
 				81310E071DE58CCD005B704A /* FileField.swift in Sources */,
 				81AF488F1DD9AA86001E7EAA /* Package.swift in Sources */,
 				818577551DE6F56E001462FD /* VerifyField.swift in Sources */,
-				812195131DD2F0AD0071FAB5 /* Defines.swift in Sources */,
+				812195131DD2F0AD0071FAB5 /* MessageDefines.swift in Sources */,
 				81AF48911DDAAE6F001E7EAA /* TextField.swift in Sources */,
 				8181963E1DD5682900C6A71D /* Field.swift in Sources */,
 				81713C861DB8664200EDAEEF /* AppDelegate.swift in Sources */,
 				812195101DD2EDC50071FAB5 /* MessageOtherCell.swift in Sources */,
+				8184CB6C1E0D08760061A254 /* LoginDefines.swift in Sources */,
 				815B472C1DE84538002E0444 /* ContentField.swift in Sources */,
 				81713CB51DB8AA4200EDAEEF /* LoginViewController.swift in Sources */,
 				811A1BC71DC872390078C44C /* SettingTableViewController.swift in Sources */,
 				81713CC71DBE0FC100EDAEEF /* Extensions.swift in Sources */,
 				814A3E821DC20AB9007CF48D /* MessageTableViewCell.swift in Sources */,
 				814A3E661DBF353F007CF48D /* MainTabViewController.swift in Sources */,
+				8184CB6F1E0D0A430061A254 /* MessageDataManager.swift in Sources */,
 				815B472E1DE84814002E0444 /* AttatchmentField.swift in Sources */,
 				814A3E851DC20C5D007CF48D /* MessageModel.swift in Sources */,
 				814A3E7F1DC1E87B007CF48D /* MessageTableViewController.swift in Sources */,

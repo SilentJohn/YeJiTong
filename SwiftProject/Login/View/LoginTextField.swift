@@ -12,7 +12,7 @@ import UIKit
 class LoginTextField: UITextField {
     @IBInspectable var leftImageName: String? {
         didSet {
-            self.leftViewMode = UITextFieldViewMode.always
+            self.leftViewMode = .always
             if leftImageName != nil {
                 let leftView = UIImageView(image: UIImage(named: leftImageName!))
                 leftView.bounds = CGRect(x: 0, y: 0, width: 32, height: 32)

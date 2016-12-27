@@ -48,7 +48,7 @@ class SettingTableViewController: UITableViewController {
             
         })
         alertExit.addAction(UIAlertAction(title: "确定", style: .destructive) { action in
-            if connetedToNetwork() {
+            if connetedToNetwork {
                 MBProgressHUD.showAdded(to: self.view, animated: true)
                 NetRequestManager().send(tid: .LOGOUTREQ, requestID: 2, success: { (dic, tid, requestId) in
                     MBProgressHUD.hide(for: self.view, animated: true)
@@ -71,7 +71,7 @@ class SettingTableViewController: UITableViewController {
                             , to: loginViewController, duration: 0.5, options: .transitionFlipFromRight, animations: {
                                 
                         }) { (finished) in
-                            MBProgressHUD.show(messages: "注销成功", view: UIApplication.shared.keyWindow)
+                            MBProgressHUD.show(messages: "注销成功", view: loginViewController.view)
                         }
                     } else {
                         MBProgressHUD.show(error: "注销失败", view: self.view)

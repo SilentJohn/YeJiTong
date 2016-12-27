@@ -71,7 +71,7 @@ class NetRequestManager: NSObject, XMLParserDelegate {
                 print("No validation code")
                 return nil
             }
-            guard let nodeId = SQLiteOperation.getMyData(key: kNodeId) else {
+            guard let nodeId = SQLiteOperation.getMyData(key: nodeIdKey) else {
                 print("No node id")
                 return nil
             }
