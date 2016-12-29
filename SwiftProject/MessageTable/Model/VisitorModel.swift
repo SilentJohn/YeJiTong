@@ -13,6 +13,7 @@ class VisitorModel: Model {
     var openId: String = ""
     var userId: String = ""
     var icon: String?
+    var markName: String?
     var nickname: String?
     var message: String?
     var createAt: Date?
@@ -52,6 +53,12 @@ extension VisitorModel {
             return "\(tempNotReadNum)"
         }
     }
+    var markNamePinyin: String? {
+        guard let tempMarkName = markName else {
+            return nil
+        }
+        return tempMarkName.transformToPinyin()
+    }
 }
 
 // MARK: - Co-worker model
@@ -60,4 +67,32 @@ class collegueModel: VisitorModel {
     var area: String?
 }
 
-// MARK: - 
+// MARK: - Customer model
+class customerModel: VisitorModel {
+    var joinTime: Date?
+    var country: String?
+    var province: String?
+    var city: String?
+    var lastActiveTime: Date?
+    var companyLabels: String?
+    var customLabels: String?
+    var levelRank: Int = 0
+    var memberStartDate: Date?
+    var memberEndDate: Date?
+    var levelName: String?
+    var levelImg: String?
+    var levelDiscount: Double = 0.0
+    var customerSN: String?
+    var bonding: Bool = true
+}
+
+extension customerModel {
+    var joinTimeStr: String? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm";
+        guard let joinDate = joinTime else {
+            return nil
+        }
+        return formatter .string(from: joinDate)
+    }
+}
