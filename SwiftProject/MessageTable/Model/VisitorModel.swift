@@ -41,7 +41,7 @@ extension VisitorModel {
         guard let createDate = createAt else {
             return nil
         }
-        return formatter .string(from: createDate)
+        return formatter.string(from: createDate)
     }
     var notReadNumStr: String? {
         guard let tempNotReadNum = notReadNum else {
@@ -53,12 +53,12 @@ extension VisitorModel {
             return "\(tempNotReadNum)"
         }
     }
-    var markNamePinyin: String? {
-        guard let tempMarkName = markName else {
-            return nil
-        }
-        return tempMarkName.transformToPinyin()
-    }
+//    var markNamePinyin: String? {
+//        guard let tempMarkName = markName else {
+//            return nil
+//        }
+//        return tempMarkName.transformToPinyin()
+//    }
 }
 
 // MARK: - Co-worker model
@@ -93,6 +93,6 @@ extension customerModel {
         guard let joinDate = joinTime else {
             return nil
         }
-        return formatter .string(from: joinDate)
+        return formatter.string(from: joinDate)
     }
 }
