@@ -53,22 +53,22 @@ extension VisitorModel {
             return "\(tempNotReadNum)"
         }
     }
-//    var markNamePinyin: String? {
-//        guard let tempMarkName = markName else {
-//            return nil
-//        }
-//        return tempMarkName.transformToPinyin()
-//    }
+    var markNamePinyin: String? {
+        guard let tempMarkName = markName else {
+            return nil
+        }
+        return tempMarkName.transformToPinyin()
+    }
 }
 
 // MARK: - Co-worker model
-class collegueModel: VisitorModel {
+class ColleagueModel: VisitorModel {
     var position: String?
     var area: String?
 }
 
 // MARK: - Customer model
-class customerModel: VisitorModel {
+class CustomerModel: VisitorModel {
     var joinTime: Date?
     var country: String?
     var province: String?
@@ -86,7 +86,7 @@ class customerModel: VisitorModel {
     var bonding: Bool = true
 }
 
-extension customerModel {
+extension CustomerModel {
     var joinTimeStr: String? {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm";

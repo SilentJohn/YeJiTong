@@ -112,7 +112,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIGestureRecog
         MBProgressHUD.showAdded(to: view, animated: true)
         let deviceAndiOSVersion = "\(UIDevice.current.deviceString()) + IOS\(iOSVersion)"
         let loginDic: [String:String] = [userNameKey:userName, userPassKey:password, userDeviceKey:deviceAndiOSVersion, userForcedLoginKey:userForcedLogin, deviceTypeKey:"2", appVersionKey:appVersion]
-        NetRequestManager().send(contentDic: loginDic, tid: .LOGINREQ, requestID: 4, success: { (dic, tid, requestId) in
+        NetRequestManager().send(contentDic: loginDic, tid: .LoginREQ, requestID: 4, success: { (dic, tid, requestId) in
             MBProgressHUD.hide(for: self.view, animated: true)
             guard let rltCode = dic["rlt_code"] as? Int else {
                 print("Invalid result code")

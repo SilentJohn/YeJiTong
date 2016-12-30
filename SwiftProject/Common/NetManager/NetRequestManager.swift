@@ -65,7 +65,7 @@ class NetRequestManager: NSObject, XMLParserDelegate {
     }
     private func contrustPackageData(contentDic: [AnyHashable:Any]? = nil, attatchmentArray: [[AnyHashable:Any]]? = nil, tid: TID, requestID: Int) -> Package? {
         let package = Package(tid: tid, requestID: Int32(requestID))
-        if tid != .LOGINREQ {
+        if tid != .LoginREQ {
             let verify = VerifyField(fieldID: UInt16(FID.TEXTFIELD.rawValue))
             guard let validationCode = SQLiteOperation.getMyData(key: validationCodeKey) else {
                 print("No validation code")
@@ -121,7 +121,7 @@ class NetRequestManager: NSObject, XMLParserDelegate {
             }
             let rcvPackage = Package()
             _ = rcvPackage.deserialize(fromData: data, start: data.startIndex, end: data.endIndex)
-            if rcvPackage.header.tid == .UNKNOWNREQRSP {
+            if rcvPackage.header.tid == .UnknownREQRSP {
                 OperationQueue.main.addOperation {
                     self.failure?(errorDesc1, rcvPackage.header.tid)
                 }
@@ -151,7 +151,7 @@ class NetRequestManager: NSObject, XMLParserDelegate {
                         return
                     }
                     switch respTid {
-                    case .LOGINRSQ:
+                    case .LoginRSP:
                         self.success?(rltDic!, respTid, Int(requestId))
                     default:
                         var dic = [AnyHashable:Any]()

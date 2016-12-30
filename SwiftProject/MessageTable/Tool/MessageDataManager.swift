@@ -33,10 +33,13 @@ class MessageDataManager {
         createTable()
     }
     
-    func getJMessageId(withLastRefreshTime refreshTime: String,  userId: String) -> String {
+    func getJMessageId(withLastRefreshTime refreshTime: String?,  userId: String) -> String? {
+        guard let tempRefreshTime = refreshTime else {
+            return nil
+        }
         var resultStr: String = String()
         SQLiteOperation.dbQueue?.inDatabase { db in
-            let sql = "SELECT * FROM message WHERE user_id='\(userId) AND message_type='1' AND create_at>'\(refreshTime)'"
+            let sql = "SELECT * FROM message WHERE user_id='\(userId) AND message_type='1' AND create_at>'\(tempRefreshTime)'"
             guard let queryResult = try? db?.executeQuery(sql, values: []) else {
                 return
             }
@@ -56,5 +59,52 @@ class MessageDataManager {
             }
         }
         return resultStr
+    }
+    
+    func getColleagues(withUserId userId: String?, visible: Bool) -> [ColleagueModel]? {
+        guard let tempUserId = userId else {
+            return nil
+        }
+        var sql = ""
+        if visible {
+            sql = "SELECT * FROM colleague_list WHERE user_id = '\(tempUserId)' AND visible='1' AND (vistor_type='1' OR visitor_type='2' OR visitor_type='3')"
+        } else {
+            sql = "SELECT * FROM colleague_list WHERE user_id = '\(tempUserId)' AND (vistor_type='1' OR visitor_type='2')"
+        }
+        var colleagueArray = [ColleagueModel]()
+        SQLiteOperation.dbQueue?.inDatabase { db in
+            guard let queryResult = try? db?.executeQuery(sql, values: []) else {
+                return
+            }
+            if let set = queryResult {
+                while set.next() {
+                    if let resultDic = set.resultDictionary() {
+                        var finalDic: [String:Any] = [String:Any]()
+                        for (key, value) in resultDic {
+                            if let keyStr = key as? String {
+                                if keyStr == "colleague" {
+                                    if let colleague = resultDic["colleague"] as? Data {
+                                        if let colleagueDic = NSKeyedUnarchiver.unarchiveObject(with: colleague) as? [AnyHashable:Any] {
+                                            for (smallKey, smallValue) in colleagueDic {
+                                                if let smallKeyStr = smallKey as? String {
+                                                    finalDic[smallKeyStr.underlineToCamel()] = smallValue
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    finalDic[keyStr.underlineToCamel()] = value
+                                }
+                                if let model = ColleagueModel.init(dic: finalDic) {
+                                    colleagueArray.append(model)
+                                }
+                            }
+                        }
+                    }
+                }
+                set.close()
+            }
+        }
+        return colleagueArray
     }
 }

@@ -50,7 +50,7 @@ class SettingTableViewController: UITableViewController {
         alertExit.addAction(UIAlertAction(title: "确定", style: .destructive) { action in
             if connetedToNetwork {
                 MBProgressHUD.showAdded(to: self.view, animated: true)
-                NetRequestManager().send(tid: .LOGOUTREQ, requestID: 2, success: { (dic, tid, requestId) in
+                NetRequestManager().send(tid: .LogoutREQ, requestID: 2, success: { (dic, tid, requestId) in
                     MBProgressHUD.hide(for: self.view, animated: true)
                     guard let rltCode = dic["rlt_code"] as? Int else {
                         print("Invalid result code")

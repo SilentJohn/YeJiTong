@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class MessageTableViewController: UITableViewController {
 
@@ -50,9 +51,43 @@ class MessageTableViewController: UITableViewController {
     }
     
     private func requestForData() {
-//        let contentDic: [AnyHashable:Any] = ["last_update_time":];
-        
-//        NetRequestManager().send(contentDic: <#T##[AnyHashable : Any]?#>, tid: <#T##TID#>, requestID: <#T##Int#>, success: <#T##(([AnyHashable : Any], TID, Int) -> Void)##(([AnyHashable : Any], TID, Int) -> Void)##([AnyHashable : Any], TID, Int) -> Void#>, failure: <#T##((String, TID) -> Void)##((String, TID) -> Void)##(String, TID) -> Void#>)
+        let deliverTimeStr = SQLiteOperation.getMyData(key: deliverTimeKey) ?? ""
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        var deliverTime = formatter.date(from: deliverTimeStr) ?? Date(timeIntervalSinceNow: -24 * 60 * 60)
+        if deliverTime.addingTimeInterval(-24 * 60 * 60).compare(Date()) == .orderedAscending {
+            deliverTime = Date(timeIntervalSinceNow: -24 * 60 * 60)
+        }
+        let contentDic: [String:String] = ["last_update_time":formatter.string(from: deliverTime)]
+        NetRequestManager().send(contentDic: contentDic, tid: .TerminalGetAllMissChatMsgREQ, requestID: 0, success: { dic, tid, requestId in
+            guard let rltCode = dic["rlt_code"] as? Int else {
+                print("Invalid result code")
+                return
+            }
+            switch rltCode {
+            case 0:
+                MBProgressHUD.show(error: "刷新失败", view: self.view)
+            case 1:
+                self.updateMessages()
+            default:
+                print("Invalid result code")
+                MBProgressHUD.show(error: "刷新失败", view: self.view)
+            }
+        }, failure: { error, tid in
+            print("\(error)")
+        })
+    }
+    
+    private func updateMessages() {
+//        var array: [VisitorModel] = [VisitorModel]()
+//        switch self.segGuestOrFellow.selectedSegmentIndex {
+//        case 0:
+//            
+//        case 1:
+//            
+//        default:
+//            break;
+//        }
     }
     
     @IBAction func headImageAction(_ sender: UIButton) {

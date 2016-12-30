@@ -10,7 +10,7 @@ import Foundation
 
 open class Model: NSObject {
     // MARK: - Initialize from dictionary
-    init?(dic: [String:Any]?) {
+    public init?(dic: [String:Any]?) {
         guard let tempDic: [String:Any] = dic else { return nil }
         super.init()
         setValuesForKeys(tempDic)

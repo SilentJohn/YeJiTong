@@ -122,3 +122,41 @@ extension String {
         return String(str)
     }
 }
+
+extension String {
+    /**
+     transform underline style name to camel style
+     - Warning: It would be better not to use this method to trival string that does not represent an identifier
+     - Returns: Camel style name
+     */
+    public func underlineToCamel() -> String {
+        var result = ""
+        for char in characters {
+            if char == "_" {
+                if let index = characters.index(of: char), index < characters.endIndex {
+                    result += String(characters[characters.index(after: index)]).uppercased()
+                }
+            } else {
+                result.append(char)
+            }
+        }
+        return result
+    }
+    
+    /**
+     transform camel style name to underline style
+     - Warning: It would be better not to use this method to trival string that does not represent an identifier
+     - Returns: Underline style name
+    */
+    func camelToUnderline() -> String {
+        var result = ""
+        for uni in unicodeScalars {
+            if CharacterSet.uppercaseLetters.contains(uni) {
+                result += ("" + "\(uni)".lowercased())
+            } else {
+                result += "\(uni)"
+            }
+        }
+        return result
+    }
+}

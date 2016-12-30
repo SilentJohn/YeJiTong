@@ -10,11 +10,16 @@ import UIKit
 import SystemConfiguration
 
 public enum TID: Int32 {
-    case UNKNOWNREQRSP = 0x00000000
-    case LOGINREQ
-    case LOGINRSQ
-    case LOGOUTREQ
-    case LOGOUTRSP
+    case UnknownREQRSP = 0x00000000
+    // MARK: - Login
+    case LoginREQ
+    case LoginRSP
+    // MARK: - Logout
+    case LogoutREQ
+    case LogoutRSP
+    // MARK: - Message
+    case TerminalGetAllMissChatMsgREQ = 0x00000041
+    case TerminalGetAllMissChatMsgRSP
 }
 
 public let iOSVersion = UIDevice.current.systemVersion
