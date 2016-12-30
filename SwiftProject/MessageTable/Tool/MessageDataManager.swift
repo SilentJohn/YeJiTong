@@ -14,7 +14,7 @@ class MessageDataManager {
     private func createTable() {
         SQLiteOperation.dbQueue?.inDatabase { db in
             // customer table
-            var sql = "CREATE TABLE IF NOT EXISTS visitor_list(id INTEGER PRIMARY KEY,open_id TEXT NOT NULL,user_id TEXT NOT NULL,icon TEXT,nickname TEXT,message TEXT,create_at TEXT,search_str TEXT,not_read_num TEXT,visitor_type TEXT NOT NULL,visible TEXT NOT NULL,mark_name TEXT,country TEXT,province TEXT,city TEXT,gender TEXT,phone_num TEXT,birthday TEXT,address TEXT,remark TEXT,join_time TEXT,last_active_time TEXT,vip_code TEXT,credit TEXT,status TEXT,last_activity_time TEXT,company_label TEXT,custom_label TEXT,member_level TEXT,member_start_date TEXT,member_end_date TEXT,level_name TEXT,level_img TEXT,level_discount TEXT,customer_sn TEXT,bunding TEXT)"
+            var sql = "CREATE TABLE IF NOT EXISTS visitor_list(id INTEGER PRIMARY KEY,open_id TEXT NOT NULL,user_id TEXT NOT NULL,icon TEXT,nickname TEXT,message TEXT,create_at TEXT,search_str TEXT,not_read_num TEXT,visitor_type TEXT NOT NULL,visible TEXT NOT NULL,mark_name TEXT,country TEXT,province TEXT,city TEXT,gender TEXT,phone_num TEXT,birthday TEXT,address TEXT,remark TEXT,join_time TEXT,last_active_time TEXT,vip_code TEXT,credit TEXT,status TEXT,last_activity_time TEXT,company_label TEXT,custom_label TEXT,member_level TEXT,member_start_date TEXT,member_end_date TEXT,level_name TEXT,level_img TEXT,level_discount TEXT,customer_sn TEXT,bonding TEXT)"
             try? db?.executeUpdate(sql, values: [])
             
             // co-worker table
@@ -22,7 +22,7 @@ class MessageDataManager {
             try? db?.executeUpdate(sql, values: [])
             
             // message table
-            sql = "CREATE TABLE IF NOT EXISTS tmessage (id integer PRIMARY KEY,_j_msgid TEXT,message BLOB NOT NULL, create_at TEXT NOT NULL,user_id TEXT NOT NULL,open_id TEXT NOT NULL,state TEXT,messageType TEXT)"
+            sql = "CREATE TABLE IF NOT EXISTS message (id integer PRIMARY KEY,_j_msgid TEXT,message BLOB NOT NULL, create_at TEXT NOT NULL,user_id TEXT NOT NULL,open_id TEXT NOT NULL,state TEXT,message_type TEXT)"
             try? db?.executeUpdate(sql, values: [])
         }
     }
@@ -33,4 +33,28 @@ class MessageDataManager {
         createTable()
     }
     
+    func getJMessageId(withLastRefreshTime refreshTime: String,  userId: String) -> String {
+        var resultStr: String = String()
+        SQLiteOperation.dbQueue?.inDatabase { db in
+            let sql = "SELECT * FROM message WHERE user_id='\(userId) AND message_type='1' AND create_at>'\(refreshTime)'"
+            guard let queryResult = try? db?.executeQuery(sql, values: []) else {
+                return
+            }
+            if let set = queryResult {
+                while set.next() {
+                    guard let jMessageId = set.object(forColumnName: "_j_msgid") as? String  else {
+                        print("Invalid _j_msgid")
+                        continue
+                    }
+                    resultStr += "\(jMessageId),"
+                }
+            }
+            if resultStr.characters.count <= 0 {
+                resultStr = "0"
+            } else {
+                resultStr = resultStr.substring(to: resultStr.index(before: resultStr.endIndex))
+            }
+        }
+        return resultStr
+    }
 }

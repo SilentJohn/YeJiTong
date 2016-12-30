@@ -32,7 +32,6 @@ class LoginTextField: UITextField {
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-//        fatalError("init(coder:) has not been implemented")
     }
     convenience init(leftImageName: String) {
         self.init(frame: CGRect.zero, leftImageName: leftImageName)

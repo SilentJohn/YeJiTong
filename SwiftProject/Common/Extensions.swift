@@ -110,3 +110,15 @@ extension Date {
         return formatter.string(from: Date())
     }
 }
+
+extension String {
+    public func transformToPinyin() -> String {
+        let str = NSMutableString(string: self) as CFMutableString
+        if CFStringTransform(str, nil, kCFStringTransformToLatin, false) {
+            if CFStringTransform(str, nil, kCFStringTransformStripDiacritics, false) {
+                print("\(str)")
+            }
+        }
+        return String(str)
+    }
+}
