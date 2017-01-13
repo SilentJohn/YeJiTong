@@ -61,6 +61,7 @@
 		8176A1A41E13A7C7008C12D7 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8176A1A31E13A7C7008C12D7 /* Model.swift */; };
 		8181963C1DD567BA00C6A71D /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8181963B1DD567BA00C6A71D /* Utility.swift */; };
 		8181963E1DD5682900C6A71D /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8181963D1DD5682900C6A71D /* Field.swift */; };
+		81842F4C1E28E00A00873169 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81842F4B1E28E00A00873169 /* ChatViewController.swift */; };
 		8184CB6C1E0D08760061A254 /* LoginDefines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8184CB6B1E0D08760061A254 /* LoginDefines.swift */; };
 		8184CB6F1E0D0A430061A254 /* MessageDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8184CB6E1E0D0A430061A254 /* MessageDataManager.swift */; };
 		818577551DE6F56E001462FD /* VerifyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818577541DE6F56E001462FD /* VerifyField.swift */; };
@@ -147,6 +148,7 @@
 		8176A1A31E13A7C7008C12D7 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		8181963B1DD567BA00C6A71D /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		8181963D1DD5682900C6A71D /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
+		81842F4B1E28E00A00873169 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		8184CB6B1E0D08760061A254 /* LoginDefines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginDefines.swift; sourceTree = "<group>"; };
 		8184CB6E1E0D0A430061A254 /* MessageDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDataManager.swift; sourceTree = "<group>"; };
 		818577541DE6F56E001462FD /* VerifyField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyField.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				814A3E7E1DC1E87B007CF48D /* MessageTableViewController.swift */,
+				81842F4B1E28E00A00873169 /* ChatViewController.swift */,
 				814A3E831DC20C32007CF48D /* Model */,
 				814A3E801DC20A72007CF48D /* View */,
 				812195111DD2F04D0071FAB5 /* Defines */,
@@ -829,6 +832,7 @@
 				814A3E7F1DC1E87B007CF48D /* MessageTableViewController.swift in Sources */,
 				816B2A4C1DF021BC00AFB205 /* CommonDefines.swift in Sources */,
 				815B472A1DE7E5A6002E0444 /* ReadPath.swift in Sources */,
+				81842F4C1E28E00A00873169 /* ChatViewController.swift in Sources */,
 				815B47281DE7DF3A002E0444 /* SQLiteOperation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
